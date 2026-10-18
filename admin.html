@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Админ – Төлбөр баталгаажуулах</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF0F3;--surface:#FAFBFC;--ink:#16212C;--muted:#586573;--line:#D0D8E0;
+  --accent:#2347C9;--accent-ink:#fff;--up:#0B8F6A;--down:#CC3B35;--warn:#A86A00;
+  --tint-up:rgba(11,143,106,.12);--tint-down:rgba(204,59,53,.12);--tint-warn:rgba(168,106,0,.14);
+  --f-display:'Unbounded','Arial Black',system-ui,sans-serif;
+  --f-body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0F161D;--surface:#172029;--ink:#E6EDF3;--muted:#93A1B0;--line:#2A3743;
+  --accent:#7C9BFF;--accent-ink:#0B1220;--up:#34C79B;--down:#FF6B63;--warn:#E3A63B;
+  --tint-up:rgba(52,199,155,.14);--tint-down:rgba(255,107,99,.14);--tint-warn:rgba(227,166,59,.16);
+  color-scheme:dark;}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);
+  padding:max(20px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:920px;margin:0 auto}
+h1{font:700 clamp(18px,4.5vw,24px)/1.2 var(--f-display);margin:0}
+h2{font:700 20px/1.2 var(--f-display);margin:0 0 6px}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+.login{max-width:420px;margin:8vh auto 0}
+label{display:block;font:500 12px var(--f-mono);color:var(--muted);margin:12px 0 4px}
+input[type=email],input[type=password],input[type=search]{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:500 15px var(--f-body)}
+button{font:inherit;cursor:pointer}
+.btn{min-height:42px;padding:8px 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-weight:600}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);width:100%;margin-top:16px;min-height:46px}
+.btn:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.msg{min-height:20px;margin-top:10px;color:var(--down);font-size:13px}
+.top{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.who{font:400 12px var(--f-mono);color:var(--muted);word-break:break-all}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.f{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font-weight:500;min-height:40px}
+.f.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.f b{font:500 12px var(--f-mono);margin-left:6px;opacity:.85}
+.search{margin-bottom:12px}
+.list{display:flex;flex-direction:column;gap:10px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;align-items:center;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+@media (max-width:620px){.item{grid-template-columns:minmax(0,1fr)}}
+.em{font-weight:600;word-break:break-all}
+.meta{font:400 12px var(--f-mono);color:var(--muted);margin-top:2px}
+.badge{display:inline-block;font:500 12px var(--f-mono);padding:2px 8px;border-radius:6px;margin-right:8px}
+.badge.pending{background:var(--tint-warn);color:var(--warn)}
+.badge.approved{background:var(--tint-up);color:var(--up)}
+.badge.rejected{background:var(--tint-down);color:var(--down)}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.ok{background:var(--up);border-color:var(--up);color:#fff}
+.no{color:var(--down)}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:10px}
+code{font-family:var(--f-mono);background:var(--bg);padding:2px 6px;border-radius:4px;word-break:break-all}
+.steps{margin:10px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;max-width:90vw}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+ <section id="vLoad" class="card login"><h2>Админ</h2><p class="muted">Ачаалж байна…</p></section>
+
+ <section id="vLogin" class="card login" hidden>
+  <h2>Админ нэвтрэлт</h2>
+  <p class="muted">Админы имэйл, нууц үгээрээ нэвтэрнэ үү.</p>
+  <label for="aEmail">Имэйл</label>
+  <input id="aEmail" type="email" autocomplete="email">
+  <label for="aPass">Нууц үг</label>
+  <input id="aPass" type="password" autocomplete="current-password">
+  <button class="btn primary" id="aGo">Нэвтрэх</button>
+  <div class="msg" id="aMsg"></div>
+ </section>
+
+ <section id="vDenied" class="card login" hidden>
+  <h2>Админы эрх байхгүй</h2>
+  <p class="muted">Энэ хаяг админаар бүртгэгдээгүй байна. Өөрийгөө админ болгохын тулд Firebase Console → Firestore Database дотор:</p>
+  <ol class="steps">
+   <li><code>admins</code> нэртэй collection үүсгэнэ.</li>
+   <li>Document ID дээр доорх UID-г тавина: <code id="uid"></code></li>
+   <li>Нэг талбар нэмнэ: <code>admin</code> = <code>true</code> (boolean).</li>
+   <li>Энэ хуудсыг дахин ачаална.</li>
+  </ol>
+  <button class="btn" style="margin-top:16px" data-out>Гарах</button>
+ </section>
+
+ <section id="vApp" hidden>
+  <div class="top">
+   <div><h1>Төлбөрийн хүсэлтүүд</h1><div class="who" id="adm"></div></div>
+   <button class="btn" data-out>Гарах</button>
+  </div>
+  <div class="filters" id="filters" role="tablist"></div>
+  <input class="search" id="q" type="search" placeholder="Имэйлээр хайх" aria-label="Имэйлээр хайх">
+  <div class="list" id="list"></div>
+ </section>
+
+</div>
+<div id="toast" hidden role="status"></div>
+
+<script type="module">
+const FIREBASE_CONFIG={
+  apiKey:"AIzaSyBZmoH1NEE8E1SmIMakahCy0t-ce8wyDY8",
+  authDomain:"tradelab-19d44.firebaseapp.com",
+  projectId:"tradelab-19d44",
+  storageBucket:"tradelab-19d44.firebasestorage.app",
+  messagingSenderId:"294409727779",
+  appId:"1:294409727779:web:c3774ec42ea7d048456696"
+};
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,doc,getDoc,collection,onSnapshot,updateDoc,deleteDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const $=s=>document.querySelector(s);
+const views=['vLoad','vLogin','vDenied','vApp'];
+const go=id=>views.forEach(v=>$('#'+v).hidden=(v!==id));
+const app=initializeApp(FIREBASE_CONFIG),auth=getAuth(app),db=getFirestore(app);
+let unsub=null,rows=[],filter='pending',query='';
+const LABEL={pending:'Хүлээгдэж буй',approved:'Зөвшөөрсөн',rejected:'Татгалзсан',all:'Бүгд'};
+
+function toast(t){const e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>e.hidden=true,2400);}
+function fmt(ts){
+  if(!ts||!ts.toDate)return 'огноо байхгүй';
+  const d=ts.toDate(),p=n=>String(n).padStart(2,'0');
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
+}
+document.querySelectorAll('[data-out]').forEach(b=>b.onclick=()=>signOut(auth));
+
+async function login(){
+  const m=$('#aMsg');m.textContent='';
+  const e=$('#aEmail').value.trim(),p=$('#aPass').value;
+  if(!e||!p){m.textContent='Имэйл болон нууц үгээ оруулна уу.';return;}
+  $('#aGo').disabled=true;
+  try{await signInWithEmailAndPassword(auth,e,p);}
+  catch(err){m.textContent='Имэйл эсвэл нууц үг буруу байна.';}
+  $('#aGo').disabled=false;
+}
+$('#aGo').onclick=login;
+$('#aPass').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
+
+function render(){
+  const count=s=>s==='all'?rows.length:rows.filter(r=>r.status===s).length;
+  $('#filters').innerHTML='';
+  ['pending','approved','rejected','all'].forEach(s=>{
+    const b=document.createElement('button');
+    b.className='f'+(s===filter?' on':'');b.setAttribute('role','tab');
+    b.append(LABEL[s]);const n=document.createElement('b');n.textContent=count(s);b.append(n);
+    b.onclick=()=>{filter=s;render();};
+    $('#filters').append(b);
+  });
+  const q=query.toLowerCase();
+  const vis=rows.filter(r=>(filter==='all'||r.status===filter)&&(!q||(r.userEmail||'').toLowerCase().includes(q)));
+  const list=$('#list');list.innerHTML='';
+  if(!vis.length){
+    const d=document.createElement('div');d.className='empty';
+    d.textContent=q?'Хайлтад тохирох хүсэлт олдсонгүй.':(filter==='pending'?'Хүлээгдэж буй төлбөр алга байна.':'Энэ ангилалд хүсэлт алга.');
+    list.append(d);return;
+  }
+  vis.forEach(r=>{
+    const it=document.createElement('div');it.className='item';
+    const left=document.createElement('div');
+    const em=document.createElement('div');em.className='em';em.textContent=r.userEmail||'(имэйлгүй)';
+    const meta=document.createElement('div');meta.className='meta';
+    const bd=document.createElement('span');bd.className='badge '+r.status;bd.textContent=LABEL[r.status]||r.status;
+    meta.append(bd,fmt(r.createdAt));
+    left.append(em,meta);
+    const acts=document.createElement('div');acts.className='acts';
+    const mk=(t,cls,fn)=>{const b=document.createElement('button');b.className='btn '+cls;b.textContent=t;b.onclick=async()=>{b.disabled=true;try{await fn();}catch(e){toast('Алдаа гарлаа. Дахин оролдоно уу.');b.disabled=false;}};return b;};
+    const setSt=st=>()=>updateDoc(doc(db,'payments',r.id),{status:st,reviewedAt:serverTimestamp(),reviewedBy:auth.currentUser.email}).then(()=>toast(st==='approved'?'Зөвшөөрлөө':st==='rejected'?'Татгалзлаа':'Хүлээгдэж буй болголоо'));
+    if(r.status!=='approved')acts.append(mk('Зөвшөөрөх','ok',setSt('approved')));
+    if(r.status==='pending')acts.append(mk('Татгалзах','no',setSt('rejected')));
+    if(r.status==='approved')acts.append(mk('Эрх цуцлах','no',setSt('pending')));
+    acts.append(mk('Устгах','no',async()=>{
+      if(!confirm((r.userEmail||'Энэ хэрэглэгч')+'-ийн хүсэлтийг устгах уу? Хэрэглэгч дахин төлбөрийн цонх харна.'))throw 0;
+      await deleteDoc(doc(db,'payments',r.id));toast('Устгалаа');
+    }));
+    it.append(left,acts);list.append(it);
+  });
+}
+$('#q').addEventListener('input',e=>{query=e.target.value.trim();render();});
+
+onAuthStateChanged(auth,async user=>{
+  if(unsub){unsub();unsub=null;}
+  if(!user){go('vLogin');return;}
+  go('vLoad');
+  let ok=false;
+  try{const a=await getDoc(doc(db,'admins',user.uid));ok=a.exists();}catch(e){ok=false;}
+  if(!ok){$('#uid').textContent=user.uid;go('vDenied');return;}
+  $('#adm').textContent=user.email;
+  go('vApp');
+  unsub=onSnapshot(collection(db,'payments'),snap=>{
+    rows=snap.docs.map(d=>({id:d.id,...d.data()}));
+    rows.sort((a,b)=>((b.createdAt&&b.createdAt.seconds)||0)-((a.createdAt&&a.createdAt.seconds)||0));
+    render();
+  },()=>toast('Мэдээлэл уншиж чадсангүй. Дүрмээ шалгана уу.'));
+});
+</script>
+</body>
+</html>
