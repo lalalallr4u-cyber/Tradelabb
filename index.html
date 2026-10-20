@@ -293,6 +293,143 @@ body.gated .wrap,body.gated #tip{display:none!important}
 
 <div id="tip" hidden role="status"></div>
 
+<style id="gen-z">
+:root{--r:16px;--g1:linear-gradient(135deg,#6D5BFF,#2347C9 55%,#00C2FF)}
+body{background:radial-gradient(900px 500px at 10% -10%,rgba(109,91,255,.18),transparent 60%),radial-gradient(800px 500px at 100% 0,rgba(0,194,255,.14),transparent 55%),var(--bg);font-size:16px;line-height:1.7}
+h1{background:var(--g1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{border-radius:var(--r);box-shadow:0 8px 30px rgba(20,30,60,.08);border-color:transparent;backdrop-filter:blur(6px)}
+.lvl{border-radius:14px;transition:transform .15s,box-shadow .15s}.lvl:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(35,71,201,.18)}
+.lvl.on{background:var(--g1);color:#fff;border-color:transparent;box-shadow:0 8px 22px rgba(35,71,201,.35)}.lvl.on .mt{color:#e8eeff}.lvl.on .bar{background:rgba(255,255,255,.3)}.lvl.on .bar i{background:#fff}
+.btn,.seg,.opt,.chip,.les,.cell{border-radius:12px}
+.btn{transition:transform .12s,box-shadow .12s}.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn.primary{background:var(--g1);border-color:transparent;color:#fff;box-shadow:0 6px 16px rgba(35,71,201,.35)}
+.opt{transition:border-color .15s,transform .12s;padding:14px}.opt:hover:not(:disabled){transform:translateX(3px);border-color:var(--accent)}
+#reader p,#reader li{font-size:16.5px}#reader h3.sh{font-size:12px;color:var(--accent)}
+.lead{font-size:18px;font-weight:500}
+.plain{border-radius:14px;border-left:5px solid var(--up);background:var(--tint-up);padding:12px 14px}
+.gz-key{margin:14px 0;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px dashed var(--accent)}
+.gz-key b{display:block;margin-bottom:6px}.gz-key ol{margin:0;padding-left:20px}
+.gz-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.gz-bar{position:sticky;top:env(safe-area-inset-top,0px);height:4px;background:var(--line);border-radius:2px;z-index:5;margin-bottom:8px}
+.gz-bar i{display:block;height:100%;width:0;background:var(--g1);border-radius:2px}
+.gz-enc{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:var(--tint-up);color:var(--ink)}
+.gz-enc.t{background:var(--tint-down)}
+@media (prefers-reduced-motion:no-preference){#reader>*,#fb>*{animation:gzin .35s both}@keyframes gzin{from{opacity:0;transform:translateY(8px)}}}
+</style>
+
+<style id="pro">
+header{padding:20px 22px;border-radius:22px;background:linear-gradient(135deg,#1B2B6B,#2347C9 60%,#00A9E0);color:#fff;box-shadow:0 14px 40px rgba(35,71,201,.35)}
+header h1{background:none;-webkit-text-fill-color:#fff;color:#fff}
+header .sub{color:rgba(255,255,255,.82)}header .stat span{color:rgba(255,255,255,.7)}header .stat b{color:#fff}
+#reader{counter-reset:s}
+#reader h3.sh{counter-increment:s;display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.04em;margin-top:26px}
+#reader h3.sh::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--g1);color:#fff;font:600 12px var(--f-mono)}
+#reader figure.fg{padding:12px;border-radius:16px;background:var(--bg);border:1px solid var(--line)}
+.terms>div{padding:10px 12px;border-radius:12px;background:var(--bg);margin-bottom:8px}
+.terms dt{font-weight:600;color:var(--accent)}
+#gate{background:radial-gradient(700px 500px at 15% 0,rgba(109,91,255,.35),transparent 60%),radial-gradient(700px 500px at 100% 100%,rgba(0,194,255,.28),transparent 60%),#0B1220;color:#E6EDF3;align-items:center}
+#gate .gbox{margin-top:0;position:relative;overflow:hidden;max-width:460px;padding:30px 26px 24px;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:rgba(23,32,41,.78);backdrop-filter:blur(18px);box-shadow:0 30px 80px rgba(0,0,0,.5);--surface:#172029;--ink:#E6EDF3;--muted:#A5B2C0;--line:rgba(255,255,255,.16);--bg:#0F161D;--accent:#7C9BFF}
+#gate .gbox::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,#6D5BFF,#2347C9,#00C2FF)}
+#gate .gbrand{display:flex;align-items:center;gap:10px;font:700 13px var(--f-display);letter-spacing:.02em;margin-bottom:16px;color:#fff}
+#gate .gbrand i{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#6D5BFF,#00C2FF);font-style:normal}
+#gate .gperks{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:6px;font-size:13px;color:#C9D3DE}
+#gate .gperks li::before{content:"✓";color:#34C79B;font-weight:700;margin-right:8px}
+#gate h2{font-size:24px;color:#fff}
+#gate input{border-radius:12px;background:rgba(255,255,255,.06);color:#fff;transition:border-color .15s,box-shadow .15s}
+#gate input:focus{outline:0;border-color:#7C9BFF;box-shadow:0 0 0 4px rgba(124,155,255,.25)}
+#gate .gbtn{border-radius:14px;background:linear-gradient(135deg,#6D5BFF,#2347C9 60%,#00A9E0);color:#fff;min-height:50px;box-shadow:0 10px 26px rgba(35,71,201,.5);transition:transform .12s}
+#gate .gbtn:hover:not(:disabled){transform:translateY(-2px)}
+#gate .bank{border-radius:16px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05)}
+#gate .note{border-radius:14px;background:rgba(255,107,99,.14)}
+#gate .gmsg{color:#FF8A83}
+</style>
+
+<style id="pro2">
+/* Professional refinement: restrained palette, flat surfaces, quiet motion */
+:root{
+  --bg:#F3F5F8;--surface:#FFFFFF;--ink:#0F1B2D;--muted:#5A6676;--line:#DCE2EA;
+  --accent:#1E40AF;--accent-ink:#FFFFFF;--up:#0A7F5F;--down:#C0352F;--warn:#9A6200;
+  --tint-up:rgba(10,127,95,.09);--tint-down:rgba(192,53,47,.09);
+  --g1:#1E40AF;--r:12px;
+  --f-display:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D1521;--surface:#141F2E;--ink:#E7EDF5;--muted:#93A1B3;--line:#25334A;
+  --accent:#7C9BFF;--accent-ink:#0B1220;--up:#34C79B;--down:#FF6B63;--warn:#E3A63B;
+  --tint-up:rgba(52,199,155,.12);--tint-down:rgba(255,107,99,.12);--g1:#7C9BFF}}
+:root[data-theme="dark"]{
+  --bg:#0D1521;--surface:#141F2E;--ink:#E7EDF5;--muted:#93A1B3;--line:#25334A;
+  --accent:#7C9BFF;--accent-ink:#0B1220;--up:#34C79B;--down:#FF6B63;--warn:#E3A63B;
+  --tint-up:rgba(52,199,155,.12);--tint-down:rgba(255,107,99,.12);--g1:#7C9BFF}
+
+body{background:var(--bg);font-size:15.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1{font:600 clamp(20px,4.6vw,26px)/1.2 var(--f-display);letter-spacing:-.01em;background:none;-webkit-text-fill-color:currentColor;color:var(--ink)}
+h2{font:600 17px/1.35 var(--f-display);letter-spacing:-.005em}
+h3{font-weight:500}
+
+header{padding:20px 22px;border-radius:var(--r);background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:0 1px 2px rgba(15,27,45,.05);border-top:3px solid var(--accent)}
+header h1{background:none;-webkit-text-fill-color:currentColor;color:var(--ink)}
+header .sub{color:var(--muted)}
+header .stats{gap:0}
+header .stat{padding:0 18px;border-left:1px solid var(--line)}
+header .stat:first-child{border-left:0;padding-left:0}
+header .stat b{color:var(--ink);font-size:19px}
+header .stat span{color:var(--muted)}
+@media (max-width:520px){header .stat{padding:0 12px}}
+
+.card{border-radius:var(--r);border:1px solid var(--line);box-shadow:0 1px 2px rgba(15,27,45,.04);backdrop-filter:none;padding:20px}
+.lvl{border-radius:10px;transition:border-color .15s,background-color .15s;box-shadow:none}
+.lvl:hover{transform:none;box-shadow:none;border-color:var(--accent)}
+.lvl.on{background:var(--surface);color:var(--ink);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.lvl.on .mt{color:var(--muted)}
+.lvl.on .bar{background:var(--line)}
+.lvl.on .bar i{background:var(--up)}
+.lvl .nm{font:600 13px/1.25 var(--f-display)}
+
+.btn,.seg,.opt,.chip,.les,.cell{border-radius:10px}
+.btn{transition:background-color .15s,border-color .15s;box-shadow:none}
+.btn:hover:not(:disabled){transform:none;border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:none}
+.btn.primary:hover:not(:disabled){filter:brightness(1.08)}
+.opt{padding:13px 14px;transition:border-color .15s,background-color .15s}
+.opt:hover:not(:disabled){transform:none;border-color:var(--accent)}
+.chip{transition:border-color .15s}
+.chip:hover{border-color:var(--accent)}
+.seg button.on{background:var(--accent);color:var(--accent-ink)}
+#chart{border-radius:10px}
+
+#reader p,#reader li{font-size:15.5px}
+.lead{font-size:17px;font-weight:500;line-height:1.6}
+#reader h3.sh{font:600 14px/1.3 var(--f-display);letter-spacing:0;text-transform:none;color:var(--ink);margin-top:28px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+#reader h3.sh::before{width:24px;height:24px;border-radius:6px;background:var(--accent);color:var(--accent-ink);font:600 12px var(--f-mono)}
+#reader figure.fg{padding:12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
+.terms>div{padding:10px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+.terms dt{font-weight:600;color:var(--ink)}
+.plain{border-radius:8px;border-left:3px solid var(--up);background:var(--tint-up);padding:12px 14px}
+.gz-key{margin:14px 0;padding:14px 16px;border-radius:10px;background:var(--bg);border:1px solid var(--line);border-left:3px solid var(--accent)}
+.gz-enc{border-radius:8px;border:1px solid var(--line)}
+.gz-bar{height:3px;border-radius:0}
+.gz-bar i{background:var(--accent);border-radius:0}
+@media (prefers-reduced-motion:no-preference){#reader>*,#fb>*{animation-duration:.2s}}
+
+/* Sign-in / payment gate */
+#gate{background:#0B1424;color:#E7EDF5;align-items:center}
+#gate .gbox{border-radius:16px;padding:32px 28px 26px;background:#121D30;border:1px solid rgba(255,255,255,.09);backdrop-filter:none;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+#gate .gbox::before{height:3px;background:#4F6FE8}
+#gate .gbrand{font:600 14px var(--f-display);letter-spacing:.01em}
+#gate .gbrand i{border-radius:8px;background:#3B5BDB}
+#gate .gperks{color:#B9C5D3}
+#gate h2{font:600 22px/1.25 var(--f-display);color:#fff}
+#gate input{border-radius:10px;background:rgba(255,255,255,.05)}
+#gate input:focus{border-color:#7C9BFF;box-shadow:0 0 0 3px rgba(124,155,255,.22)}
+#gate .gbtn{border-radius:10px;background:#3B5BDB;box-shadow:none;min-height:48px;transition:background-color .15s}
+#gate .gbtn:hover:not(:disabled){transform:none;background:#4C6BEA}
+#gate .bank{border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03)}
+#gate .note{border-radius:10px;background:rgba(255,107,99,.1);border:1px solid rgba(255,107,99,.25)}
+#gOut{border-radius:8px}
+</style>
+
+
 <script>
 //<<DATA
 const CATS={
@@ -808,10 +945,11 @@ const A=(p,seed,agg,o)=>X(p,seed,Object.assign({vis:0,agg:agg,slots:0},o||{}));
 const NL_MARKET={title:'Зах зээл гэж юу вэ?',
   summary:'Эхлэхээсээ өмнө үнэ хаанаас үүсдэг, юуг арилжаалдаг, брокер юу хийдгийг ойлгоно. Энэ хичээл график, ордер, эрсдэлийн бүх суурь.',
   sections:[
-   {h:'Үнэ хаанаас гардаг вэ?',p:['Зах зээл бол авагч, худалдагч хоёрын уулзах газар. Үнэ нь тэдний тохиролцоо. Авахыг хүсэгч олон, зарагч цөөн байвал үнэ өснө. Эсрэгээр зарагч олон бол үнэ буурна.','График нь энэ тэмцлийн түүхийг харуулдаг. Өсөж буй хэсэгт авагчид давамгайлсан, буурч буй хэсэгт худалдагчид давамгайлсан.'],fig:0},
-   {h:'Юуг арилжаалдаг вэ?',p:['Валют (EUR/USD гэх мэт), хувьцаа, крипто валют, алт, газрын тос, индекс зэргийг арилжаалдаг. Хөрөнгө бүрийн хэлбэлзэл, цагийн хуваарь өөр боловч график унших, stop тавих, эрсдэл тооцох зарчим бүгдэд адилхан.','Энэ сайтын график бүхэн сургалтын зорилгоор үүсгэсэн жишиг өгөгдөл. Бодит зах зээлийн үнэ биш.']},
-   {h:'Брокер гэж хэн бэ?',p:['Брокер бол таныг зах зээлтэй холбодог компани. Та ордер өгнө, брокер гүйцэтгэнэ. Брокер spread эсвэл шимтгэл авдаг. Брокерийг сонгохдоо хяналтын байгууллагаас лиценз авсан эсэхийг заавал шалга.']},
-   {h:'Эрсдэл бол бодит',p:['Ихэнх эхлэгч эхний жилдээ мөнгөө алддаг. Шалтгаан нь ихэвчлэн мэдлэг дутуу, том хэмжээ, stop-гүй арилжаа, сэтгэлийн шийдвэр. Тиймээс эхлээд demo дээр дадлагажиж, дараа нь зөвхөн алдаж чадах мөнгөөр бага хэмжээгээр эхэл.','Энэ сайт сургалтын зорилготой бөгөөд санхүүгийн зөвлөгөө биш.']}],
+   {h:'Үнэ хаанаас гардаг вэ?',p:['Зах зээл бол авагч, худалдагч хоёр уулзаж «энэ үнээр тохирлоо» гэж хэлэлцдэг газар. Үнийг ямар нэг хүн «тогтоодоггүй». Үнэ нь тэдний тохиролцооны үр дүн бөгөөд секунд тутам шинэчлэгддэг.','Авахыг хүсэгч олон, зарагч цөөн бол авагчид үнийг өсгөхөөс өөр аргагүй: үнэ өснө. Зарагч олон, авагч цөөн бол зарагчид үнээ буулгана: үнэ буурна. Энэ бол арилжааны хамгийн анхны, хамгийн чухал зарчим.','График нь энэ «хүч сорилцоо»-ны түүхийг харуулдаг. Өсөж буй хэсэгт авагчид давамгайлсан, буурч буй хэсэгт худалдагчид давамгайлсан гэж ойлго.'],fig:0},
+   {h:'Өдөр тутмын амьдралаас жишээ',p:['Шинэ iPhone гарахад дэлгүүрт дараалал үүсэж, үнэ нь буурдаггүй. Харин хуучин загвар хэнд ч хэрэггүй болбол хямдралтай зарагддаг. Зах зээлийн үнэ яг ингэж хүсэлт (авагч) ба нийлүүлэлт (зарагч)-ийн харьцаанаас болж өөрчлөгддөг.']},
+   {h:'Юуг арилжаалдаг вэ?',p:['Валют (жишээ нь EUR/USD), хувьцаа, крипто валют, алт, газрын тос, индекс зэргийг арилжаалдаг. Хөрөнгө бүрийн хэлбэлзэл, арилжаалах цаг нь өөр боловч график унших, stop тавих, эрсдэл тооцох зарчим бүгдэд адилхан. Тиймээс нэгийг сайн сурвал бусдыг нь хурдан сурна.','Анхаар: энэ сайтын график бүхэн сургалтын зорилгоор үүсгэсэн жишиг өгөгдөл. Бодит зах зээлийн үнэ биш, тиймээс алдаж сурахад аюулгүй.']},
+   {h:'Брокер гэж хэн бэ?',p:['Та зах зээлд шууд орж чадахгүй. Брокер бол таныг зах зээлтэй холбодог компани: та ордер (захиалга) өгнө, брокер түүнийг гүйцэтгэнэ. Банкны салбар шиг гүүр гэж төсөөл.','Брокер spread эсвэл шимтгэл гэсэн хөлс авдаг. Сонгохдоо хяналтын байгууллагаас лиценз авсан эсэхийг заавал шалга. «Баталгаатай ашиг» амлаж байвал хол бай.']},
+   {h:'Эрсдэл бол бодит',p:['Ихэнх эхлэгч эхний жилдээ мөнгөө алддаг. Шалтгаан нь ихэвчлэн дөрөв: мэдлэг дутуу, хэт том хэмжээгээр арилжаалах, stop-гүй орох, сэтгэлийн шийдвэр гаргах.','Тиймээс дараалал нь: 1) энд мэдлэгээ тогтоо, 2) demo дээр дадлагажи, 3) бодит мөнгөөр зөвхөн «алдсан ч амьдралд нөлөөлөхгүй» дүнгээр бага хэмжээгээр эхэл. Энэ сайт сургалтын зорилготой бөгөөд санхүүгийн зөвлөгөө биш.']}],
   figs:[F('up',31,{cap:'Авагчид давамгайлахад үнэ өснө. Дундах ухралт нь худалдагч түр давамгайлсныг харуулна.',notes:[{i:12,at:'h',t:'Авагч давамгайлав',side:'u'},{i:20,at:'l',t:'Худалдагч давамгайлав',side:'d'}]})],
   terms:[['Зах зээл','Авагч, худалдагч уулзаж үнэ тогтоодог газар.'],['Хөрөнгө (instrument)','Арилжаалах зүйл: валют, хувьцаа, алт гэх мэт.'],['Брокер','Таныг зах зээлтэй холбож ордерыг гүйцэтгэдэг компани.'],['Хэлбэлзэл (volatility)','Үнэ хэр хурдан, их хөдөлдөг вэ гэдэг.'],['Demo данс','Хуурамч мөнгөөр дадлагажих данс.']],
   mistakes:['Мэдлэггүйгээр бодит мөнгөөр шууд эхлэх.','Нэг арилжаагаар баяжина гэж найдах.','Зөвлөмж зарагчдын «баталгаатай ашиг» гэсэн амлалтад итгэх.'],
@@ -1144,7 +1282,7 @@ const PLAIN={
 '0-2':'Авна гэдэг нь «үнэ өснө» гэж бооцоолж, одоо авч байгаад дараа нь илүү үнээр зарах. Худалдана гэдэг нь «үнэ буурна» гэж бодож, эхлээд зараад дараа нь хямд үнээр буцааж авах. Зөв таавал зөрүү нь ашиг, буруу таавал зөрүү нь алдагдал.',
 '0-3':'График бол газрын зураг шиг. Босоо тэнхлэг нь өндөр (үнэ), хэвтээ тэнхлэг нь цаг. Өндөр оргил, нам ёроолыг олж хараад сурвал зураг «унших» болно.',
 '0-4':'Нэг лаа бол нэг хугацааны түүх: хаанаас эхэлсэн, хаана дууссан, хамгийн өндөр ба хамгийн нам нь хаана хүрсэн. Ногоон бие (өсөлт), улаан бие (уналт) гэж эхлээд тааруулж сур. Урт сүүл нь «үнэ тийшээ явсан ч буцаж ирсэн» гэсэн үг.',
-'0-5':'Уул өгсөж байгаа хүн мэт: оргил бүр өмнөхөөсөө өндөр, амрах бүр өмнөхөөсөө өндөр бол өгсөж байна (өсөх трэнд). Оргил бүр нам болж байвал уруудаж байна. Хоёр зүгт тогтохгүй бол тэнгэр тайван байгаа юм (range).',
+'0-5':'Уул өгсөж байгаа хүн мэт: оргил бүр өмнөхөөсөө өндөр, амрах бүр өмнөхөөсөө өндөр бол өгсөж байна (өсөх трэнд). Оргил бүр нам болж байвал уруудаж байна. Хоёр зүгт тогтохгүй бол зах зээл тайван байгаа юм (range).',
 '0-6':'Бөмбөгийг шалан дээр хаявал тасралтгүй өндөрт буцаж үсэрдэг. Шал нь дэмжлэг, тааз нь эсэргүүцэл. Үнэ ихэвчлэн ийм газраас эргэдэг боловч заримдаа шалыг нурааж, доошоо унадаг.',
 '0-7':'Валют солих газар шиг: «авах үнэ» ба «зарах үнэ» хоёр өөр. Хоёрын зөрүү нь (spread) таны төлөх хураамж. Market ордер нь «одоо байгаа үнээр шууд», limit ордер нь «миний хүссэн үнэд хүрвэл» гэсэн захиалга.',
 '0-8':'Замд гарахаасаа өмнө хаашаа явахаа, ямар тохиолдолд буцахаа шийддэг шиг. Орох үнэ, «буруу болвол энд гарна» (stop), «зөв болвол энд аваад гарна» (зорилт) гурвыг арилжаанаас ӨМНӨ шийд.',
@@ -3347,5 +3485,37 @@ if(FIREBASE_CONFIG.apiKey.startsWith('YOUR_')){
     };
   });
 }
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+function nextBtn(label,fn){const b=document.createElement('button');b.className='btn';b.textContent=label;b.onclick=fn;return b;}
+function enhanceReader(){
+  const r=$('#reader');if(!r||r.hidden||r.querySelector('.gz-bar')||!r.querySelector('h2'))return;
+  const hs=[...r.querySelectorAll('h3.sh')].map(h=>h.firstChild&&h.firstChild.textContent.trim()).filter(Boolean).slice(0,-2);
+  const bar=document.createElement('div');bar.className='gz-bar';bar.innerHTML='<i></i>';r.prepend(bar);
+  if(hs.length){const k=document.createElement('div');k.className='gz-key';
+    k.innerHTML='<b>🎯 Энэ хичээлээр юу сурах вэ?</b><ol>'+hs.map(t=>'<li>'+t+'</li>').join('')+'</ol><small style="color:var(--muted)">Уншихдаа график дээрх лаа бүр дээр дарж туршаарай.</small>';
+    const lead=r.querySelector('.lead');(lead||r.querySelector('h2')).after(k);}
+  const m=(r.querySelector('.exhead')||{}).textContent||'';const n=m.match(/(\d+)\/(\d+)/);const a=r.querySelector('.actions');
+  if(n&&a){const cur=+n[1],tot=+n[2],nav=document.createElement('div');nav.className='gz-nav';
+    const go=()=>{const t=document.querySelector('#lesson .lh[data-les="'+cur+'"]');if(t)t.click();else{const l=[...document.querySelectorAll('.lvl')],i=l.findIndex(x=>x.classList.contains('on'));if(l[i+1])l[i+1].click();}};
+    nav.appendChild(nextBtn(cur<tot?'Дараагийн хичээл →':'Дараагийн шат (илүү ахисан) →',go));a.after(nav);}
+}
+addEventListener('scroll',()=>{const i=document.querySelector('.gz-bar i');if(!i)return;const h=document.documentElement,p=h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight);i.style.width=Math.min(100,p*100)+'%';},{passive:true});
+function enhanceFb(){
+  const f=$('#fb');if(!f||f.querySelector('.gz-enc')||!f.querySelector('.verdict'))return;
+  const pass=f.querySelector('.verdict.pass');const d=document.createElement('p');d.className='gz-enc'+(pass?'':' t');
+  d.textContent=pass?'🎉 Сайн байна! Энэ ойлголтыг эзэмшлээ. Үргэлжлүүлээрэй.':'💡 Санаа зов. Алдаа бол сурах хамгийн хурдан зам. Дээрх «Алдаа» тайлбарыг уншаад дахин оролд. Оролдлого бүрт шинэ өгөгдөл гарна.';
+  f.querySelector('.fbl').after(d);
+  if(!pass){const a=f.querySelector('.actions');if(a)a.prepend(nextBtn('📖 Хичээлээ дахин унших',()=>{const c=document.querySelector('#lesson .les.cur .lh');if(c)c.click();}));}
+}
+new MutationObserver(()=>{enhanceReader();enhanceFb();}).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+<script>
+(function(){const b=document.querySelector('#gate .gbox');if(!b||b.querySelector('.gbrand'))return;
+const d=document.createElement('div');d.innerHTML='<div class="gbrand"><i>📈</i>АРИЛЖААНЫ ДАСГАЛ</div><ul class="gperks"><li>Эхлэгчээс мэргэжлийн түвшин хүртэл 4 шат</li><li>График дээр ажиллаж дадлага хийнэ</li><li>Алдаа бүрийн тайлбар, хичээл бүрийн шалгалт</li></ul>';
+while(d.lastChild)b.prepend(d.lastChild);})();
 </script>
 </body></html>
