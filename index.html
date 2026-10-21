@@ -3,7 +3,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* Layout: stats header, three level tabs, lesson column beside a chart workspace, mistake review below. */
 :root{
@@ -210,6 +210,7 @@ body.gated .wrap,body.gated #tip{display:none!important}
 </style>
 <div id="gate">
  <div class="gbox">
+  <ol class="gsteps" id="gSteps" aria-label="Алхам"><li data-s="auth">Нэвтрэх</li><li data-s="pay">Төлбөр</li><li data-s="wait">Баталгаажуулалт</li></ol>
   <section id="gLoad"><h2>Арилжаа сурч, дадлага хийх платформ</h2><p>Түр хүлээнэ үү. Агуулгыг ачаалж байна…</p></section>
 
   <section id="gAuth" hidden>
@@ -257,6 +258,7 @@ body.gated .wrap,body.gated #tip{display:none!important}
 <button id="gOut" hidden>Гарах</button>
 <div class="wrap">
   <header>
+    <button class="view-toggle" id="viewToggle" type="button" hidden></button>
     <div>
       <h1>Арилжаа сурч, дадлага хийх платформ</h1>
       <p class="sub">Хичээлүүдийг дарааллаар нь үзэж, график дээр дадлага хийгээрэй. Хичээл бүрийн дараах сорил болон эцсийн шалгалтаар мэдлэгээ шалгана. Мөн демо дансанд виртуал мөнгөөр арилжаа хийж, гаргасан шийдвэрийнхээ үр дүнг харах боломжтой.</p>
@@ -267,6 +269,19 @@ body.gated .wrap,body.gated #tip{display:none!important}
       <div class="stat"><b id="stExam">0/3</b><span>Шалгалт</span></div>
     </div>
   </header>
+  <section class="start" id="start" aria-labelledby="startH">
+    <div class="start-main">
+      <h2 id="startH">Эндээс эхэл</h2>
+      <p>Хичээлийг дарааллаар нь уншаад, график дээр дасгал хийнэ. Дараа нь демо дансанд виртуал мөнгөөр туршиж үзнэ.</p>
+      <div class="start-actions"><button class="btn primary" id="ctaStart" type="button">Эхний хичээлээс эхлэх</button><button class="btn" id="ctaGloss" type="button">Нэр томьёо унших</button></div>
+      <details class="start-rules"><summary>Платформын дүрэм</summary><ul id="startRules"><li>1 lot = 100 нэгж</li><li>Leverage 1:100</li><li>Демо данс: виртуал мөнгө</li></ul></details>
+    </div>
+    <ol class="start-steps">
+      <li><b>Хичээл унших</b><span>Үзэл баримтлалыг жишээтэй нь хамт уншина.</span></li>
+      <li><b>Дасгал хийх</b><span>График дээр дарж, хариугаа шууд шалгана.</span></li>
+      <li><b>Демо арилжаа</b><span>Алдах эрсдэлгүйгээр арилжааны шийдвэр гаргана.</span></li>
+    </ol>
+  </section>
   <div class="tabs" role="tablist"><button class="tab on" id="tabLearn" role="tab">Хичээл ба дасгал</button><button class="tab" id="tabDemo" role="tab">Демо арилжаа</button><button class="tab" id="tabGloss" role="tab">Нэр томьёоны тайлбар</button><span class="lab" id="plan" style="margin-left:auto;align-self:center"></span></div>
   <div id="gloss" class="stack" hidden><div class="card"><h2>Нэр томьёоны тайлбар</h2><p class="lead">Арилжаанд түгээмэл хэрэглэдэг үг, нэр томьёоны тайлбар. Хайж буй үгээ бичээд утгыг нь олоорой.</p><div class="row"><label class="lab" for="gq">Хайх</label><input class="num" id="gq" type="search" autocomplete="off" style="width:min(320px,100%)"><span class="lab" id="gcnt"></span></div><dl class="terms" id="glist" style="margin-top:12px"></dl></div></div>
   <div id="learn" class="stack">
@@ -623,9 +638,9 @@ const LV=[
  {title:'Ашиг/эрсдэлийн харьцаа (RR)',
   summary:'Арилжаа бүр ашигтай дуусахгүй. Гэхдээ нэг арилжааны дундаж ашиг дундаж алдагдлаас их бөгөөд бусад нөхцөл тохирсон бол ашигтай үр дүнд хүрэх боломжтой.',
   sections:[
-   {h:'RR гэж юу вэ?',p:['Ашиг/эрсдэлийн харьцаа (RR) нь зорилт хүртэлх зайг stop хүртэлх зайд хуваасан тоо. Эрсдэл 3, ашиг 6 бол RR = 6 ÷ 3 = 2 буюу 1:2.'],fig:0},
+   {h:'RR гэж юу вэ?',p:['Ашиг/эрсдэлийн харьцаа (RR) = зорилт хүртэлх зай ÷ stop хүртэлх зай. Жишээ: орох үнэ 100, stop 97 (зай 3), зорилт 106 (зай 6) бол RR = 6 ÷ 3 = 2 буюу 1:2. Энэ нь эрсдэлд тавьсан 1 нэгжид 2 нэгж ашиг хүлээж байна гэсэн үг.'],fig:0},
    {h:'Яагаад чухал вэ?',p:['Ашиг/эрсдэлийн харьцаа 1:2 байх нь арилжааны гуравны нэгийг ашигтай хаахад хангалттай гэсэн үг биш. Шимтгэл болон бусад зардлыг тооцохгүй үед 1:2 харьцаатай арилжаанд алдагдалгүй байхын тулд арилжааны ойролцоогоор 33.3% нь ашигтай дуусах шаардлагатай; зардлыг тооцвол энэ хувь өснө.','Шимтгэл болон бусад зардлыг тооцохгүй үед алдагдалгүй байхад шаардлагатай ашигтай арилжааны хувь ойролцоогоор: 1:1 харьцаанд 50%, 1:2 харьцаанд 33.3%, 1:3 харьцаанд 25% байна.']},
-   {h:'R гэж юу вэ?',p:['R бол таны эрсдэлийн нэгж. Алдагдлыг хязгаарлах түвшинд хүрвэл −1R, 1:2 зорилтод хүрвэл +2R. Үр дүнг долларын оронд R-ээр хэмжвэл арилжаа бүрийг харьцуулахад хялбар.']},
+   {h:'R гэж юу вэ?',p:['R бол таны эрсдэлийн нэгж. Жишээ: нэг арилжаанд $20 эрсдэлд тавьсан бол 1R = $20. Stop-д хүрвэл −1R (−$20), 1:2 зорилтод хүрвэл +2R (+$40). Үр дүнг долларын оронд R-ээр хэмжвэл өөр өөр хэмжээтэй арилжаануудыг шууд харьцуулах боломжтой.']},
    {h:'Хэт сайн RR-аас болгоомжил',p:['Зорилтыг хэт хол тавивал үнэ түүнд хүрэхгүй байх магадлал нэмэгдэнэ. Ихэнх тохиолдолд 1:1.5–1:3 орчим харьцаа бодитой байдаг.']}],
   figs:[F('trade',13,{cap:'Эрсдэл 3, ашиг 6: ашиг/эрсдэл 1:2.',lines:tradeLines,zones:tradeZones})],
   terms:[['RR','Зорилтын зай ÷ stop-ийн зай.'],['R','Нэг арилжааны эрсдэлийн нэгж.'],['Ашигтай дууссан арилжааны хувь','Нийт арилжаанаас хэдэн хувь нь ашигтай дууссаныг харуулна.'],['Дундаж ашиг','Ашигтай арилжаануудын дундаж ашиг.']],
@@ -647,10 +662,10 @@ const LV=[
  {title:'Данс: balance, equity, margin',
   summary:'Арилжаа хийхээс өмнө дансныхаа тоонуудыг ойлгох ёстой. Balance, equity, margin гурав нь өөр өөр зүйл.',
   sections:[
-   {h:'Balance: дансны үлдэгдэл',p:['Balance нь хаагдсан арилжаа дууссаны дараах дансны үлдэгдэл. Нээлттэй арилжааны ашиг, алдагдлыг оруулдаггүй.']},
-   {h:'Floating P/L ба Equity',p:['Нээлттэй арилжаа бүр одоогийн үнээр түр ашиг эсвэл алдагдалтай байдаг. Үүнийг floating P/L гэнэ.','Equity = Balance + floating P/L. Одоо бүх арилжаагаа хаавал дансанд үлдэх хэмжээ.'],fig:0},
-   {h:'Margin ба Free margin',p:['Арилжаа нээхэд брокер дансны нэг хэсгийг барьцаа болгон түгжинэ. Үүнийг margin гэнэ.','Free margin = Equity − Margin. Энэ нь шинэ арилжаа нээхэд ашиглаж болох үлдэгдэл хөрөнгө юм.']},
-   {h:'Leverage (хөшүүрэг)',p:['Leverage 1:100 гэдэг нь $1-ийн барьцаагаар $100-ийн хэмжээтэй арилжаа хийх боломжтой гэсэн үг. Margin = үнэ × нэгж ÷ leverage.','Хөшүүрэг нь ашгийг ч, алдагдлыг ч нэмэгдүүлдэг. Хэт өндөр хөшүүрэг хэрэглэвэл дансны мөнгөө хурдан алдах эрсдэлтэй.']},
+   {h:'Balance: дансны үлдэгдэл',p:['Balance нь хаагдсан арилжаануудын үр дүнг тусгасан дансны үлдэгдэл юм. Нээлттэй арилжааны түр ашиг, алдагдал энэ дүнд орохгүй. Жишээ: эхний данс $1,000, хаагдсан арилжаануудаас нийт $50 олсон бол Balance = $1,050.']},
+   {h:'Floating P/L ба Equity',p:['Нээлттэй арилжаа бүр одоогийн үнээр түр ашиг эсвэл алдагдалтай байдаг. Үүнийг floating P/L гэнэ. Тооцоо: Buy позицид floating P/L = (одоогийн үнэ − орсон үнэ) × нэгж. Sell позицид зөрүүг эсрэгээр, (орсон үнэ − одоогийн үнэ) гэж авна.','Equity = Balance + floating P/L. Энэ нь бүх арилжаагаа яг одоо хаавал дансанд үлдэх дүн юм. Жишээ: Balance $1,000. 0.1 lot (10 нэгж)-ийг 112-оор авсан, одоо үнэ 116 бол floating P/L = (116 − 112) × 10 = +$40. Equity = 1,000 + 40 = $1,040.'],fig:0},
+   {h:'Margin ба Free margin',p:['Арилжаа нээхэд брокер дансны нэг хэсгийг барьцаа болгон түгжинэ. Үүнийг margin гэнэ. Margin нь зарцуулагдсан мөнгө биш: арилжааг хаасны дараа дансанд чөлөөлөгдөнө.','Free margin = Equity − Margin. Энэ нь шинэ арилжаа нээхэд ашиглаж болох үлдэгдэл хөрөнгө юм. Жишээ: Equity $1,040, margin $11.20 бол free margin = 1,040 − 11.20 = $1,028.80.']},
+   {h:'Leverage (хөшүүрэг)',p:['Leverage 1:100 гэдэг нь $1-ийн барьцаагаар $100-ийн хэмжээтэй арилжаа нээх боломжтой гэсэн үг. Тооцоо: margin = үнэ × нэгж ÷ leverage. Жишээ: үнэ 112, 10 нэгж, leverage 1:100 бол margin = 112 × 10 ÷ 100 = $11.20.','Хөшүүрэг нь арилжааны хэмжээг нэмэгдүүлдэг тул ашиг, алдагдал хоёулаа ижил харьцаагаар өснө. Барьцаа бага байгаа нь эрсдэл бага гэсэн үг биш: ашиг, алдагдал нь барьцаагаар бус арилжааны бүтэн хэмжээгээр тооцогдоно. Хэт өндөр хөшүүрэг хэрэглэвэл дансаа хурдан алдах эрсдэлтэй.']},
    {h:'Margin call',p:['Алдагдал нэмэгдэж, дансны хөрөнгө барьцааны хэмжээнд ойртоход брокер анхааруулга өгч болно (margin call). Цаашлаад арилжааг автоматаар хааж магадгүй (stop out). Эрсдэлийг багасгахын тулд арилжааны хэмжээг бага байлгаж, алдагдлаа хязгаарлах түвшнийг урьдчилан тогтооно.','Энэ сайтад: 1 lot = 100 нэгж, leverage 1:100. Бодит зах зээл дээр lot-ийн хэмжээ хөрөнгө бүрт өөр байдаг.']}],
   figs:[F('trade',14,{cap:'Орсон үнээс одоогийн үнэ хүртэлх зөрүү нь floating ашиг.',lines:(c,v)=>{const n=c[v-1].c;return{e:{p:n-4,c:'muted',label:'Орсон'},n:{p:n,c:'accent',label:'Одоо'}};},zones:(c,v)=>[{a:c[v-1].c-4,b:c[v-1].c,c:'up'}]})],
   terms:[['Balance','Хаагдсан арилжааны дараах үлдэгдэл.'],['Equity','Balance + floating P/L.'],['Floating P/L','Нээлттэй арилжааны түр ашиг, алдагдал.'],['Margin','Арилжаа барихад түгжигдэх барьцаа.'],['Free margin','Equity − Margin.'],['Leverage','Барьцаанаас хэд дахин том арилжаа хийх боломж.'],['Margin call','Equity margin-д ойртоход брокерийн сэрэмжлүүлэг.'],['Stop out','Албадан хаалт.']],
@@ -669,9 +684,9 @@ const LV=[
  {title:'Lot ба ордрын хэмжээ',
   summary:'Арилжааны хэмжээг таамгаар биш, тооцоолж сонгоно. Эхлээд хэр их алдагдал хүлээж болохоо шийдээд, дараа нь алдагдлыг хязгаарлах түвшин хүртэлх зайд үндэслэн хэмжээгээ тооцно.',
   sections:[
-   {h:'Lot гэж юу вэ?',p:['Lot бол арилжааны хэмжээний нэгж. Энэ сайтад 1 lot = 100 нэгж. 0.1 lot = 10 нэгж, 0.01 lot = 1 нэгж.','Ашиг = үнийн зөрүү × нэгж. 0.1 lot (10 нэгж) дээр үнэ 4-өөр хөдөлбөл 4 × 10 = $40.']},
-   {h:'Хэдэн lot авах вэ?',p:['Эхлээд тухайн арилжаанд алдаж болох дүнгээ (жишээлбэл, дансны 1–2%) тодорхойл. Дараа нь орох үнэ болон алдагдлыг хязгаарлах түвшний хоорондох зайг ашиглан арилжааны хэмжээгээ тооц.','Арилжааны хэмжээ = алдаж болох дүн ÷ алдагдлыг хязгаарлах түвшин хүртэлх зай.'],fig:0},
-   {h:'Жишээ',p:['Данс $5,000, эрсдэл 2% = $100. Орох 112, stop 108, зай 4. Хэмжээ = 100 ÷ 4 = 25 нэгж = 0.25 lot. Алдагдлыг хязгаарлах түвшинд хүрвэл 25 × 4 = $100 алдана.']},
+   {h:'Lot гэж юу вэ?',p:['Lot бол арилжааны хэмжээг заах нэгж. Энэ сайтад 1 lot = 100 нэгж, 0.1 lot = 10 нэгж, 0.01 lot = 1 нэгж. Өөрөөр хэлбэл нэгж = lot × 100.','Ашиг эсвэл алдагдал = үнийн зөрүү × нэгж. Жишээ: 0.1 lot (10 нэгж) дээр үнэ 4-өөр хөдөлбөл 4 × 10 = $40. Харин 1 lot (100 нэгж) дээр ижил хөдөлгөөн 4 × 100 = $400 болно.']},
+   {h:'Хэдэн lot авах вэ?',p:['Эхлээд тухайн арилжаанд алдаж болох дүнгээ (жишээлбэл, дансны 1–2%) тодорхойл. Дараа нь орох үнэ болон алдагдлыг хязгаарлах түвшний хоорондох зайг ашиглан арилжааны хэмжээгээ тооц.','Нэгж = алдаж болох дүн ÷ stop хүртэлх зай. Lot = нэгж ÷ 100.'],fig:0},
+   {h:'Жишээ',p:['Данс $5,000, эрсдэл 2%: 5,000 × 0.02 = $100. Орох үнэ 112, stop 108 бол зай = 112 − 108 = 4. Нэгж = 100 ÷ 4 = 25, өөрөөр хэлбэл 0.25 lot. Шалгалт: stop-д хүрвэл 25 × 4 = $100 алдана. Энэ нь төлөвлөсөн эрсдэлтэй яг тэнцэнэ.']},
    {h:'Stop холдох үед позицын хэмжээг багасгана',p:['Алдагдлыг хязгаарлах түвшнээ 2 дахин холдуулбал ижил эрсдэлд хэмжээгээ 2 дахин багасга. Алдагдлыг хязгаарлах түвшнээ өөрчилсөн ч арилжааны хэмжээгээ тохируулахгүй байх нь түгээмэл алдаа.']}],
   figs:[F('trade',15,{cap:'алдагдлыг хязгаарлах түвшин ойр бол позицины хэмжээ их, хол stop бол бага хэмжээ. Эрсдэл ижил.',lines:(c,v)=>{const e=c[v-1].c;return{entry:{p:e,c:'muted',label:'Орох'},s1:{p:e-2,c:'down',label:'Stop A'},s2:{p:e-4,c:'down',label:'Stop B',dash:true}};}})],
   terms:[['Lot','Арилжааны хэмжээний нэгж (энд 100 нэгж).'],['Нэгж','Хөрөнгийн тоо ширхэг.'],['Эрсдэлийн дүн','Алдагдлыг хязгаарлах түвшинд хүрвэл алдах $.'],['Алдагдлыг хязгаарлах түвшин хүртэлх зай','Орох үнэ ба stop-ийн зөрүү.']],
@@ -939,7 +954,7 @@ const NL_ORDERS={title:'Ордрын төрөл, bid/ask, spread',
    {h:'Limit ордер',p:['Limit ордер бол илүү таатай үнийг хүлээх ордер. Үнэ ухарч дэмжлэгт хүрвэл авах (Buy limit), эсэргүүцэлд хүрвэл худалдах (Sell limit).','Үнэ тэр түвшинд хүрэхгүй бол ордер биелэхгүй.'],fig:1},
    {h:'Stop ордер',p:['Buy stop бол одоогийн үнээс дээр тавигдаж, үнэ тэр түвшинг давахад авна. Гаралтыг дагаж орох зорилгоор ашигладаг. Sell stop бол доош давахад худалдана.']},
    {h:'Stop-loss ба Take-profit',p:['Эдгээр нь арилжаа нээгдсэний дараа тавигддаг хамгаалалтын ордерууд. Stop-loss алдагдлыг хязгаарлана, take-profit ашгийг авна. Аль нэг нь биелмэгц арилжаа хаагдана.']},
-   {h:'Pip ба пункт',p:['Pip нь үнийн өөрчлөлтийг хэмжих стандарт нэгж юм (ихэнх валютын хосод 0.0001). Энэ платформд ашиг, алдагдлыг үнийн нэгжээр шууд тооцдог: үнэ 1 нэгжээр хөдлөхөд 1 lot (100 нэгж) дээр $100 өөрчлөгдөнө.']}],
+   {h:'Pip ба пункт',p:['Pip нь үнийн өөрчлөлтийг хэмжих стандарт нэгж юм (ихэнх валютын хосод 0.0001). Энэ платформд pip-ээр биш, үнийн нэгжээр шууд тооцдог: үнэ 1 нэгжээр хөдлөхөд 1 lot (100 нэгж) дээр $100, 0.1 lot дээр $10, 0.01 lot дээр $1 өөрчлөгдөнө.']}],
   figs:[F('up',34,{cap:'Ask үнэ bid-ээс дээр. Хоорондох зөрүү нь spread.',lines:(c,v)=>{const p=c[v-1].c;return{ask:{p:p+0.6,c:'up',label:'Ask'},bid:{p:p,c:'down',label:'Bid'}};}}),
         F('trade',35,{cap:'Buy limit одоогийн үнээс доор, Buy stop одоогийн үнээс дээр тавигдана.',lines:(c,v)=>{const p=c[v-1].c;return{cur:{p:p,c:'muted',label:'Одоо'},bl:{p:p-4,c:'up',label:'Buy limit',dash:true},bs:{p:p+4,c:'accent',label:'Buy stop',dash:true}};}})],
   terms:[['Bid','Таны зарах үнэ.'],['Ask','Таны авах үнэ.'],['Spread','Ask ба bid-ийн зөрүү. Арилжааны зардал.'],['Market ордер','Одоогийн үнээр шууд гүйцэтгэх.'],['Limit ордер','Хүссэн үнэд хүрэхийг хүлээх.'],['Stop ордер','Түвшин давахад гүйцэтгэх.'],['Slippage','Хүссэн үнээс өөр үнээр биелэх.']],
@@ -1058,7 +1073,7 @@ LV.push({name:'Мэргэжлийн',blurb:'Индикатор, олон хүр�
   sections:[
    {h:'Арилжааны төлөвлөгөө',p:['Төлөвлөгөө дараахыг агуулна: ямар хөрөнгө, timeframe-ээр арилжих, орох нөхцөл (тренд, түвшин, баталгаа), stop болон зорилтыг хэрхэн тавих, эрсдэлийн хувь, өдрийн хязгаар, арилжаа хийхгүй нөхцөл.']},
    {h:'Журнал',p:['Арилжаа бүрт чиглэл, орох/stop/зорилт, үр дүн (R-ээр), дүрэм дагасан эсэх, тухайн үеийн сэтгэл хөдлөлөө бич. 20 арилжаа тутамд эргэн хараад давтагдах алдаагаа ол.']},
-   {h:'Үндсэн үзүүлэлтүүд',p:['Ашигтай арилжааны хувь, дундаж ашиг, дундаж алдагдал, expectancy, profit factor (нийт ашиг ÷ нийт алдагдал), хамгийн их drawdown.','Expectancy = ашигтай дууссан арилжааны хувь × дундаж ашиг − алдагдалтай дууссан арилжааны хувь × дундаж алдагдал. Эерэг үзүүлэлт нь тухайн өгөгдөлд дундаж хүлээгдэж буй үр дүн эерэг байгааг илтгэнэ. Гэхдээ ирээдүйд ашигтай ажиллах баталгаа биш.']},
+   {h:'Үндсэн үзүүлэлтүүд',p:['Ашигтай арилжааны хувь, дундаж ашиг, дундаж алдагдал, expectancy, profit factor (нийт ашиг ÷ нийт алдагдал), хамгийн их drawdown.','Expectancy = ашигтай дууссан арилжааны хувь × дундаж ашиг − алдагдалтай дууссан арилжааны хувь × дундаж алдагдал. Жишээ: 40% нь ашигтай (дундаж ашиг $60), 60% нь алдагдалтай (дундаж алдагдал $30) бол expectancy = 0.4 × 60 − 0.6 × 30 = 24 − 18 = +$6. Эерэг үзүүлэлт нь тухайн өгөгдөлд дундаж хүлээгдэж буй үр дүн эерэг байгааг илтгэнэ. Гэхдээ ирээдүйд ашигтай ажиллах баталгаа биш.']},
    {h:'Ашигтай арилжааны хувь ганцаараа төөрөгдүүлдэг',p:['70% арилжаа нь ашигтай дууссан ч дундаж алдагдал дундаж ашгаас хэд дахин том бол та алдагдалтай. Ашигтай дууссан арилжааны хувийг ашиг, эрсдэлийн харьцаатай хамт үнэл.']},
    {h:'Дээжийн хэмжээ',p:['5–10 арилжаа бол санамсаргүй. Системийн чанарыг дор хаяж 50–100 арилжаагаар дүгнэ. Эхлээд демо дансанд дадлага хийж, дараа нь шаардлагатай бол бага дүнгээр бодит арилжаа хий.']}],
   figs:[],
@@ -1354,10 +1369,10 @@ const NL_DOW={title:'Dow онол: трендийн сонгодог суурь'
 const NL_RISK={title:'Эрсдэлийн менежмент: алхам алхмаар',
   summary:'Ихэнх эхлэгч мөнгөө эрсдэлийг удирдаж чадахгүйгээс алддаг. Нэг арилжаанд хэдийг эрсдэлд тавих, хэмжээг хэрхэн тооцох, алдагдлаас хэрхэн сэргэхийг энгийн тооцоогоор мэд.',
   sections:[
-   {h:'Эрсдэл гэж юу вэ?',p:['Эрсдэл бол «энэ арилжаа буруу болвол би хэдэн төгрөг алдах вэ?» гэсэн тоо. Алдагдлыг хязгаарлах түвшнээ хаана тавьснаас, хэмжээнээс хамаарна: эрсдэл = stop зай × хэмжээ.','Эрсдэлийг арилжаа НЭЭХЭЭС өмнө мэдэж, зөвшөөрч байж орно.']},
-   {h:'1–2%-ийн дүрэм',p:['Нэг арилжаанд дансныхаа дээд тал нь 1–2%-ийг эрсдэлд тавь. Данс 1000$ бол 1% = 10$, 2% = 20$.','Яагаад? Дараалсан алдагдал зайлшгүй тохиолдоно. 10 удаа дараалж алдахад: эрсдэл 1% бол данс ойролцоогоор 9.6% буурна (0.99^10). Эрсдэл 10% бол ойролцоогоор 65% буурна (0.90^10).']},
-   {h:'Хэмжээг тооцох',p:['Алхам 1: эрсдэлийн дүнгээ тодорхойл (жишээ: 2000$ дансны 1% = 20$).','Алхам 2: stop зайгаа график дээрээс тодорхойл (жишээ: нэгжид 4$).','Алхам 3: хэмжээ = эрсдэл ÷ stop зай = 20 ÷ 4 = 5 нэгж.','Шалгалт: 5 нэгж × 4$ = 20$. Алдагдлыг хязгаарлах түвшинд хүрвэл яг төлөвлөсөн 20$ алдана.']},
-   {h:'Алдагдлаас сэргэх нь хэцүү',p:['Данс 10% алдвал буцаахад 11.1% ашиг хэрэгтэй. 20% алдвал 25%, 30% алдвал 42.9%, 50% алдвал 100% (хоёр дахин өсөх) хэрэгтэй.','Тиймээс том алдагдлаас сэргэхээс илүү том алдагдалаас сэргийлэх нь хялбар.'],fig:0},
+   {h:'Эрсдэл гэж юу вэ?',p:['Эрсдэл бол «энэ арилжаа буруу болвол би хэдэн доллар алдах вэ?» гэсэн тоо. Тооцоо: эрсдэл = stop хүртэлх зай × нэгж. Жишээ: stop зай 4, 5 нэгж бол эрсдэл = 4 × 5 = $20.','Эрсдэлийг арилжаа НЭЭХЭЭС өмнө мэдэж, зөвшөөрч байж орно.']},
+   {h:'1–2%-ийн дүрэм',p:['Нэг арилжаанд дансныхаа дээд тал нь 1–2%-ийг эрсдэлд тавь. Данс 1000$ бол 1% = 10$, 2% = 20$.','Яагаад? Дараалсан алдагдал зайлшгүй тохиолдоно. 10 удаа дараалан алдахад данс арилжаа бүрээр 1%-иар буурвал 0.99-ийг 10 удаа үржүүлж ≈ 0.904 болох тул ойролцоогоор 9.6% буурна. Эрсдэл 10% бол 0.90-ийг 10 удаа үржүүлж ≈ 0.349 болох тул ойролцоогоор 65% буурна.']},
+   {h:'Хэмжээг тооцох',p:['Алхам 1: эрсдэлийн дүнгээ тодорхойл (жишээ: 2000$ дансны 1% = 20$).','Алхам 2: stop зайгаа график дээрээс тодорхойл (жишээ: нэгжид 4$).','Алхам 3: нэгж = эрсдэл ÷ stop зай = 20 ÷ 4 = 5 нэгж.','Алхам 4: lot болгон хөрвүүл. Энэ сайтад lot = нэгж ÷ 100 буюу 5 ÷ 100 = 0.05 lot.','Шалгалт: 5 нэгж × 4$ = 20$. Stop-д хүрвэл яг төлөвлөсөн 20$ алдана.']},
+   {h:'Алдагдлаас сэргэх нь хэцүү',p:['Алдсан дүнгээ нөхөхөд хэрэгтэй ашиг = алдсан хувь ÷ (100 − алдсан хувь). Данс 10% алдвал буцаахад 11.1% ашиг хэрэгтэй (10 ÷ 90). 20% алдвал 25%, 30% алдвал 42.9%, 50% алдвал 100% (хоёр дахин өсөх) хэрэгтэй.','Тиймээс том алдагдлаас сэргэхээс илүү том алдагдалаас сэргийлэх нь хялбар.'],fig:0},
    {h:'Өдрийн хязгаар ба дүрэм',p:['Өдрийн алдагдлын хязгаар тогтоо (жишээ нь дансны 3%). Хүрвэл тухайн өдөр арилжаа зогсоо.','Stop-ыг зөвхөн ашгийг хамгаалах чиглэлд (үнэд ойртуулан) зөөнө. Алдагдлыг нэмэгдүүлэхийн тулд хэзээ ч холдуулж болохгүй.','Нэг дор хэт олон арилжаа нээхгүй. Ижил чиглэлийн хамааралтай (correlated) хосууд нь нэг арилжаа гэж тооцогдоно.']}],
   figs:[F('down',56,{cap:'Дараалсан алдагдал хуримтлагдахад данс хурдан хорогдоно. Тиймээс эрсдэл бага байх ёстой.'})],
   terms:[['Эрсдэлийн дүн','Алдагдлыг хязгаарлах түвшинд хүрвэл алдах мөнгөн дүн.'],['Position sizing','Эрсдэлийн дүн, stop зайгаас арилжааны хэмжээг тооцох.'],['Өдрийн хязгаар','Өдөрт алдаж болох дээд хэмжээ. Хүрвэл арилжаа зогсоно.'],['Correlation','Хоёр хөрөнгө ижил чиглэлд хөдлөх хамаарал.'],['Risk of ruin','Дансаа бүрэн алдах магадлал.']],
@@ -3406,10 +3421,10 @@ const $=s=>document.querySelector(s);
 function nextBtn(label,fn){const b=document.createElement('button');b.className='btn';b.textContent=label;b.onclick=fn;return b;}
 function enhanceReader(){
   const r=$('#reader');if(!r||r.hidden||r.querySelector('.gz-bar')||!r.querySelector('h2'))return;
-  const hs=[...r.querySelectorAll('h3.sh')].map(h=>h.firstChild&&h.firstChild.textContent.trim()).filter(Boolean).slice(0,-2);
+  const shs=[...r.querySelectorAll('h3.sh')];shs.forEach((h,i)=>{h.id='gz-s'+i;});const hs=shs.map(h=>h.firstChild&&h.firstChild.textContent.trim()).filter(Boolean).slice(0,-2);
   const bar=document.createElement('div');bar.className='gz-bar';bar.innerHTML='<i></i>';r.prepend(bar);
   if(hs.length){const k=document.createElement('div');k.className='gz-key';
-    k.innerHTML='<b>🎯 Энэ хичээлээр юу сурах вэ?</b><ol>'+hs.map(t=>'<li>'+t+'</li>').join('')+'</ol><small style="color:var(--muted)">Уншихдаа график дээрх лаа бүр дээр дарж туршаарай.</small>';
+    k.innerHTML='<div class="gz-k-head"><b>Энэ хичээлээр юу сурах вэ?</b><span>'+hs.length+' хэсэг</span></div><ol>'+hs.map((t,i)=>'<li><a href="#gz-s'+i+'"><span>'+t+'</span></a></li>').join('')+'</ol><p class="gz-k-tip">Уншихдаа график дээрх лаа бүр дээр дарж туршаарай.</p>';
     const lead=r.querySelector('.lead');(lead||r.querySelector('h2')).after(k);}
   const m=(r.querySelector('.exhead')||{}).textContent||'';const n=m.match(/(\d+)\/(\d+)/);const a=r.querySelector('.actions');
   if(n&&a){const cur=+n[1],tot=+n[2],nav=document.createElement('div');nav.className='gz-nav';
@@ -3433,36 +3448,399 @@ const d=document.createElement('div');d.innerHTML='<div class="gbrand"><i>📈</
 while(d.lastChild)b.prepend(d.lastChild);})();
 </script>
 <style id="tradelab-theme">
-:root:root:root{--bg:#070D0F;--surface:#0D1517;--ink:#E8F1EE;--muted:#8FA39C;--line:#1B2B2A;--accent:#19E68C;--accent-ink:#04110C;--up:#19E68C;--down:#FF4D5E;--warn:#F0B429;--tint-up:rgba(25,230,140,.12);--tint-down:rgba(255,77,94,.12);--g1:linear-gradient(135deg,#19E68C,#0BB36E);color-scheme:dark}
-body{background:radial-gradient(900px 520px at 85% -10%,rgba(25,230,140,.14),transparent 60%),radial-gradient(700px 460px at 0 0,rgba(25,230,140,.07),transparent 60%),#070D0F}
-.card{box-shadow:0 10px 36px rgba(0,0,0,.45);border:1px solid var(--line);background:linear-gradient(180deg,#0E181A,#0B1214);backdrop-filter:none}
-header{background:linear-gradient(135deg,#0B1A17,#0A1214 70%);border:1px solid rgba(25,230,140,.35);box-shadow:0 0 0 1px rgba(25,230,140,.05),0 18px 50px rgba(0,0,0,.5)}
-header h1{background:none;-webkit-text-fill-color:#fff;color:#fff}
-header .stat b{color:#19E68C}
-.lvl{background:#0D1517}.lvl:hover{box-shadow:0 6px 18px rgba(25,230,140,.18)}
-.lvl.on{background:var(--g1);color:#04110C;box-shadow:0 8px 24px rgba(25,230,140,.3)}
-.lvl.on .mt{color:#0A2A1D}.lvl.on .bar{background:rgba(4,17,12,.25)}.lvl.on .bar i{background:#04110C}
-.btn.primary{background:var(--g1);color:#04110C;font-weight:600;box-shadow:0 6px 18px rgba(25,230,140,.28)}
-.pickrow .btn.on{color:#04110C}
-.tab.on{color:#19E68C;border-bottom-color:#19E68C}
-.bs .buy{background:#19E68C;color:#04110C}.bs .sell{background:#FF4D5E}
-.plain{border-left-color:#19E68C;background:var(--tint-up)}
-#reader h3.sh{color:#19E68C}#reader h3.sh::before{color:#04110C}
-#reader figure.fg{background:#0A1113}
-.terms>div{background:#0A1113;border:1px solid var(--line)}.terms dt{color:#19E68C}
-.gz-key{border-color:#19E68C}
-.chip.cur,.lvl.on,.les.cur{border-color:#19E68C}
-#tip{background:#E8F1EE;color:#0A1113}
-#gate{background:radial-gradient(700px 520px at 15% 0,rgba(25,230,140,.22),transparent 60%),radial-gradient(700px 520px at 100% 100%,rgba(25,230,140,.12),transparent 60%),#050A0B}
-#gate .gbox{--accent:#19E68C;--surface:#0D1517;--bg:#070D0F;border:1px solid rgba(25,230,140,.45);border-radius:20px;background:rgba(10,17,19,.92);box-shadow:0 0 40px rgba(25,230,140,.12),0 30px 80px rgba(0,0,0,.6)}
-#gate .gbox::before{background:linear-gradient(90deg,#19E68C,#0BB36E)}
-#gate .gbrand i{background:linear-gradient(135deg,#19E68C,#0BB36E);color:#04110C}
-#gate .gimg{display:block;width:100%;height:auto;max-height:200px;object-fit:cover;object-position:center;border-radius:14px;border:1px solid rgba(25,230,140,.3);margin:0 0 18px}
-#gate input:focus{border-color:#19E68C;box-shadow:0 0 0 4px rgba(25,230,140,.2)}
-#gate .gbtn{background:linear-gradient(135deg,#19E68C,#0BB36E);color:#04110C;font-weight:700;box-shadow:0 10px 26px rgba(25,230,140,.3)}
-#gate .glink{color:#19E68C}
-#gate .note{background:rgba(25,230,140,.1)}
-#gate .gmsg{color:#FF7A86}#gate .gmsg.ok{color:#19E68C}
-#gOut{background:#0D1517;color:#8FA39C}
+/* Tradelab visual identity: chart paper, ink panel, candlestick strip. Colour tokens drive the canvas charts too. */
+:root:root:root{
+  --bg:#E6ECEA;--surface:#FBFCFB;--ink:#0F1E24;--muted:#4F6269;--line:#C2CFCD;
+  --accent:#1E40B8;--accent-ink:#FFFFFF;--up:#0A8F5C;--down:#CF3A32;--warn:#9E6200;
+  --tint-up:rgba(10,143,92,.11);--tint-down:rgba(207,58,50,.10);
+  --g1:var(--accent);--panel:#0F1E24;--panel-ink:#EAF1F0;--panel-muted:#93A8AC;--grid:rgba(15,30,36,.055);
+  --f-display:'Inter','Noto Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+  --f-body:'Inter','Noto Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+  --f-read:'Inter','Noto Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+  color-scheme:light}
+@media (prefers-color-scheme:dark){
+:root:root:root:not([data-theme="light"]){
+  --bg:#0C1418;--surface:#121D22;--ink:#E3ECEE;--muted:#8FA3A9;--line:#25353B;
+  --accent:#8FA8FF;--accent-ink:#0B1220;--up:#2FCB93;--down:#FF6B63;--warn:#E3A63B;
+  --tint-up:rgba(47,203,147,.13);--tint-down:rgba(255,107,99,.13);
+  --panel:#0A1114;--grid:rgba(227,236,238,.045);color-scheme:dark}}
+:root:root:root[data-theme="dark"]{
+  --bg:#0C1418;--surface:#121D22;--ink:#E3ECEE;--muted:#8FA3A9;--line:#25353B;
+  --accent:#8FA8FF;--accent-ink:#0B1220;--up:#2FCB93;--down:#FF6B63;--warn:#E3A63B;
+  --tint-up:rgba(47,203,147,.13);--tint-down:rgba(255,107,99,.13);
+  --panel:#0A1114;--grid:rgba(227,236,238,.045);color-scheme:dark}
+
+/* page: graph paper */
+body{background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;background-attachment:fixed;
+  font:16px/1.6 var(--f-body);letter-spacing:0}
+.wrap{max-width:1120px;gap:18px}
+
+/* header: ink panel with candle strip */
+header{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:end;
+  padding:28px 28px 24px;border-radius:10px;border:0;box-shadow:none;background:var(--panel);color:var(--panel-ink)}
+header::after{content:"";position:absolute;z-index:-1;inset:0 0 118px 46%;background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 360 140%22 preserveAspectRatio=%22xMaxYMid slice%22%3E%3Cg style=%22--i:0%22%3E%3Cpath d=%22M11.1 8.0V39.8%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%227.9%22 y=%2215.7%22 width=%226.4%22 height=%227.9%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:1%22%3E%3Cpath d=%22M21.4 14.0V34.1%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%2218.2%22 y=%2225.3%22 width=%226.4%22 height=%222.7%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:2%22%3E%3Cpath d=%22M31.6 12.7V53.6%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%2228.4%22 y=%2225.3%22 width=%226.4%22 height=%2222.0%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:3%22%3E%3Cpath d=%22M41.8 32.3V61.6%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%2238.6%22 y=%2251.5%22 width=%226.4%22 height=%222.9%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:4%22%3E%3Cpath d=%22M52.1 28.7V72.2%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%2248.9%22 y=%2250.1%22 width=%226.4%22 height=%227.1%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:5%22%3E%3Cpath d=%22M62.3 20.7V70.9%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%2259.1%22 y=%2226.7%22 width=%226.4%22 height=%2224.4%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:6%22%3E%3Cpath d=%22M72.5 21.7V56.0%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%2269.3%22 y=%2228.8%22 width=%226.4%22 height=%2216.8%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:7%22%3E%3Cpath d=%22M82.8 27.3V73.4%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%2279.6%22 y=%2242.4%22 width=%226.4%22 height=%2214.9%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:8%22%3E%3Cpath d=%22M93.0 49.2V64.8%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%2289.8%22 y=%2255.4%22 width=%226.4%22 height=%223.2%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:9%22%3E%3Cpath d=%22M103.2 36.2V68.9%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%22100.0%22 y=%2248.6%22 width=%226.4%22 height=%229.8%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:10%22%3E%3Cpath d=%22M113.5 37.5V67.9%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22110.3%22 y=%2247.8%22 width=%226.4%22 height=%222%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:11%22%3E%3Cpath d=%22M123.7 32.2V73.1%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22120.5%22 y=%2247.2%22 width=%226.4%22 height=%2211.8%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:12%22%3E%3Cpath d=%22M133.9 32.9V77.0%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%22130.7%22 y=%2242.9%22 width=%226.4%22 height=%2212.3%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:13%22%3E%3Cpath d=%22M144.2 28.8V57.8%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22141.0%22 y=%2246.9%22 width=%226.4%22 height=%223.2%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:14%22%3E%3Cpath d=%22M154.4 33.6V90.3%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22151.2%22 y=%2250.2%22 width=%226.4%22 height=%2221.9%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:15%22%3E%3Cpath d=%22M164.6 41.5V88.4%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%22161.4%22 y=%2251.9%22 width=%226.4%22 height=%2219.5%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:16%22%3E%3Cpath d=%22M174.9 33.2V70.4%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%22171.7%22 y=%2246.2%22 width=%226.4%22 height=%224.8%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:17%22%3E%3Cpath d=%22M185.1 25.1V48.2%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22181.9%22 y=%2241.6%22 width=%226.4%22 height=%222%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:18%22%3E%3Cpath d=%22M195.4 9.7V59.1%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%22192.2%22 y=%2231.8%22 width=%226.4%22 height=%228.2%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:19%22%3E%3Cpath d=%22M205.6 17.5V44.3%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22202.4%22 y=%2234.0%22 width=%226.4%22 height=%224.8%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:20%22%3E%3Cpath d=%22M215.8 32.1V61.0%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22212.6%22 y=%2239.2%22 width=%226.4%22 height=%2215.6%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:21%22%3E%3Cpath d=%22M226.1 42.7V81.4%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22222.9%22 y=%2252.1%22 width=%226.4%22 height=%2217.5%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:22%22%3E%3Cpath d=%22M236.3 53.0V100.2%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22233.1%22 y=%2265.8%22 width=%226.4%22 height=%2219.9%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:23%22%3E%3Cpath d=%22M246.5 45.2V91.6%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%22243.3%22 y=%2265.1%22 width=%226.4%22 height=%2216.7%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:24%22%3E%3Cpath d=%22M256.8 45.7V93.6%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22253.6%22 y=%2266.0%22 width=%226.4%22 height=%226.1%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:25%22%3E%3Cpath d=%22M267.0 66.6V100.0%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22263.8%22 y=%2275.7%22 width=%226.4%22 height=%2215.2%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:26%22%3E%3Cpath d=%22M277.2 76.1V96.2%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%22274.0%22 y=%2285.8%22 width=%226.4%22 height=%225.2%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:27%22%3E%3Cpath d=%22M287.5 71.8V113.6%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22284.3%22 y=%2286.6%22 width=%226.4%22 height=%225.6%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:28%22%3E%3Cpath d=%22M297.7 73.0V106.9%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%22294.5%22 y=%2288.6%22 width=%226.4%22 height=%222%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:29%22%3E%3Cpath d=%22M307.9 54.1V113.3%22 stroke=%22%232FCB93%22 stroke-width=%221.4%22/%3E%3Crect x=%22304.7%22 y=%2272.6%22 width=%226.4%22 height=%2220.6%22 fill=%22%232FCB93%22/%3E%3C/g%3E%3Cg style=%22--i:30%22%3E%3Cpath d=%22M318.2 57.6V80.9%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22315.0%22 y=%2269.5%22 width=%226.4%22 height=%224.5%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:31%22%3E%3Cpath d=%22M328.4 66.3V102.1%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22325.2%22 y=%2272.6%22 width=%226.4%22 height=%2220.8%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:32%22%3E%3Cpath d=%22M338.6 90.9V109.1%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22335.4%22 y=%2296.9%22 width=%226.4%22 height=%227.1%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3Cg style=%22--i:33%22%3E%3Cpath d=%22M348.9 96.2V132.0%22 stroke=%22%23FF6B63%22 stroke-width=%221.4%22/%3E%3Crect x=%22345.7%22 y=%22107.5%22 width=%226.4%22 height=%2218.9%22 fill=%22%23FF6B63%22/%3E%3C/g%3E%3C/svg%3E") right center/auto 100% no-repeat;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 40%);mask-image:linear-gradient(90deg,transparent,#000 40%);opacity:.8;
+  clip-path:inset(0 0 0 0)}
+@media (prefers-reduced-motion:no-preference){header::after{animation:tl-draw 1.3s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes tl-draw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}}
+@media (prefers-color-scheme:dark){header{box-shadow:inset 0 0 0 1px var(--line)}}
+header h1{background:none;-webkit-text-fill-color:currentColor;color:var(--panel-ink);font:800 clamp(26px,5.4vw,40px)/1.1 var(--f-display);letter-spacing:-.03em;max-width:16ch}
+header .sub{color:var(--panel-muted);margin:12px 0 0;max-width:54ch;font-size:15px;line-height:1.6}
+header .stats{gap:0;font-family:var(--f-mono);padding-top:20px;border-top:1px solid rgba(255,255,255,.16)}
+header .stat{padding:0 22px;border-left:1px solid rgba(255,255,255,.16)}
+header .stat:first-child{padding-left:0;border-left:0}
+header .stat b{font:500 clamp(26px,5vw,38px)/1 var(--f-mono);color:var(--panel-ink)}
+header .stat span{font:400 13px/1.3 var(--f-body);letter-spacing:0;text-transform:none;color:var(--panel-muted);max-width:18ch;margin-top:6px}
+@media (max-width:760px){header{padding:22px 18px 18px}header::after{inset:0 0 150px 0;opacity:.22}header .stat{padding:0 12px}header .stat span{max-width:11ch}}
+
+/* labels: plain, sentence case */
+h3,.lab,.exhead,.cell span,table.t th,h3.grp,.k,#gate label{text-transform:none;letter-spacing:0}
+h3{font:600 13px var(--f-body);color:var(--muted)}
+.exhead{font:500 13px var(--f-body);color:var(--muted)}
+.lab{font:500 13px var(--f-body)}
+.cell span{font:500 12px var(--f-body)}
+table.t th{font:500 12px var(--f-body)}
+
+/* surfaces: flat, ruled */
+.card{border-radius:8px;border:1px solid var(--line);background:var(--surface);box-shadow:none;backdrop-filter:none;padding:20px}
+h2{font:700 18px/1.3 var(--f-display);letter-spacing:-.01em}
+.tabs{border-bottom:1px solid var(--ink);gap:2px}
+.tab{font:600 15px var(--f-body);padding:11px 18px;border-bottom:0;border-radius:6px 6px 0 0;color:var(--muted)}
+.tab.on{background:var(--ink);color:var(--bg)}
+.tab:not(.on):hover{color:var(--ink)}
+
+/* level tiles */
+.levels{gap:10px}
+.lvl{border-radius:8px;background:var(--surface);border:1px solid var(--line);box-shadow:none;transition:border-color .15s;padding:12px 14px;gap:6px}
+.lvl:hover{transform:none;box-shadow:none;border-color:var(--ink)}
+.lvl .nm{font:700 14px/1.25 var(--f-display)}
+.lvl .mt{font:400 12px var(--f-mono)}
+.lvl.on{background:var(--ink);color:var(--bg);border-color:var(--ink);box-shadow:none}
+.lvl.on .mt{color:var(--bg);opacity:.75}.lvl.on .bar{background:rgba(255,255,255,.22)}.lvl.on .bar i{background:var(--up)}
+:root:root:root[data-theme="dark"] .lvl.on .bar{background:rgba(0,0,0,.2)}
+.lvl .bar{height:3px;border-radius:0}.lvl .bar i{background:var(--up)}
+
+/* lesson list */
+.les,.chip,.cell,.opt,.btn,.seg,.qr,.grpbox{border-radius:6px}
+.les{background:var(--surface);transition:border-color .15s}.les.cur{border-color:var(--ink);box-shadow:inset 3px 0 0 var(--accent)}
+.chip.cur{border-color:var(--ink);box-shadow:inset 3px 0 0 var(--accent)}
+.lh .t{font-weight:600}
+
+/* reading column */
+#reader p,#reader li,#reader dd{font-family:var(--f-read);font-size:16.5px;line-height:1.75;letter-spacing:0;max-width:66ch;font-feature-settings:'cv11','ss03'}
+#reader li{margin-bottom:4px}
+.lead{font:500 18px/1.6 var(--f-read);max-width:62ch;color:var(--ink)}
+#reader h3.sh{counter-increment:none;display:block;margin:34px 0 10px;padding:2px 0 2px 12px;border-left:3px solid var(--accent);
+  font:700 17px/1.3 var(--f-display);letter-spacing:-.005em;color:var(--ink)}
+#reader h3.sh::before{content:none}
+#reader figure.fg{padding:12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+.plain{border-radius:6px;border-left:4px solid var(--up);background:var(--tint-up);padding:12px 16px}
+.terms>div,dl.terms div{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-bottom:0}
+.terms dt{color:var(--ink);font-weight:700}
+.gz-key{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;background:var(--bg)}
+.gz-enc{border-radius:6px}
+.gz-bar{height:3px;border-radius:0;background:var(--line)}.gz-bar i{background:var(--accent);border-radius:0}
+
+/* controls */
+.btn{background:var(--surface);color:var(--ink);border-color:var(--line);font-weight:600;transition:border-color .15s,background .15s}
+.btn:hover:not(:disabled){transform:none;border-color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:none}
+.btn.primary:hover:not(:disabled){filter:brightness(1.08)}
+.pickrow .btn.on,.seg button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.opt{padding:13px 14px;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){transform:none;border-color:var(--ink)}
+.bs .buy{background:var(--up);color:#fff}.bs .sell{background:var(--down);color:#fff}
+.bs button{border-radius:6px}
+#chart,#dchart,.fig{border-radius:6px}
+input:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.score{font-family:var(--f-mono)}
+.verdict{font:700 14px var(--f-display)}
+.k{font:600 12px var(--f-body);border-radius:4px}
+#tip{background:var(--ink);color:var(--bg);border-radius:6px;box-shadow:none}
+#gOut{background:var(--surface);color:var(--muted);border-radius:6px;box-shadow:none}
+
+/* gate */
+#gate{background-color:var(--panel);color:var(--panel-ink);
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:28px 28px;align-items:center}
+#gate .gbox{--accent:#8FA8FF;--surface:#121D22;--bg:#0C1418;--ink:#E3ECEE;--muted:#93A8AC;--line:rgba(255,255,255,.18);
+  max-width:440px;padding:28px 26px 24px;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:#0F1A1F;backdrop-filter:none;box-shadow:none;margin-top:0}
+#gate .gbox::before{height:3px;background:linear-gradient(90deg,#2FCB93 0 50%,#FF6B63 50% 100%)}
+#gate .gbrand{font:700 14px var(--f-display);letter-spacing:.01em;color:#EAF1F0}
+#gate .gbrand i{border-radius:6px;background:#2FCB93;color:#06150F}
+#gate .gimg{display:block;width:100%;height:auto;max-height:190px;object-fit:cover;object-position:center;margin:0 0 18px;border-radius:6px;border:1px solid rgba(255,255,255,.16)}
+#gate h2{font:700 24px/1.2 var(--f-display);color:#EAF1F0}
+#gate p{color:#A9BBBF}
+#gate label{font:500 13px var(--f-body);color:#A9BBBF}
+#gate input{border-radius:6px;background:rgba(255,255,255,.05);color:#EAF1F0;border-color:rgba(255,255,255,.2)}
+#gate input:focus{outline:0;border-color:#8FA8FF;box-shadow:0 0 0 3px rgba(143,168,255,.25)}
+#gate .gbtn{border-radius:6px;background:#8FA8FF;color:#0B1220;font:700 15px var(--f-body);box-shadow:none;min-height:48px}
+#gate .gbtn:hover:not(:disabled){transform:none;filter:brightness(1.08)}
+#gate .glink{color:#8FA8FF}
+#gate .bank{border-radius:6px;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.18)}
+#gate .note{border-radius:6px;background:rgba(255,107,99,.13);color:#EAF1F0}
+#gate .gmsg{color:#FF8A83}#gate .gmsg.ok{color:#2FCB93}
+
+/* start block */
+.start{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px 32px;align-items:start;padding:24px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--surface)}
+.start h2{font:800 22px/1.2 var(--f-display);letter-spacing:-.02em;margin:0 0 6px}
+.start-main p{margin:0 0 16px;max-width:52ch;color:var(--muted)}
+.start-actions{display:flex;flex-wrap:wrap;gap:10px}
+.start-actions .btn{min-height:48px;padding:12px 22px;font-size:16px}
+.start-rules{margin-top:14px;color:var(--muted);font-size:14px}
+.start-rules summary{cursor:pointer;font-weight:600;color:var(--ink);width:fit-content}
+.start-rules ul{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:2px}
+.start-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;counter-reset:st}
+.start-steps li{counter-increment:st;display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:12px;padding:0 0 18px;position:relative}
+.start-steps li:last-child{padding-bottom:0}
+.start-steps li::before{content:counter(st);grid-row:1/3;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);font:600 14px var(--f-mono);z-index:1}
+.start-steps li:not(:last-child)::after{content:"";position:absolute;left:16.5px;top:34px;bottom:0;width:1px;background:var(--line)}
+.start-steps b{font-weight:700;align-self:end}
+.start-steps span{color:var(--muted);font-size:14px;grid-column:2}
+@media (max-width:760px){.start{grid-template-columns:1fr;padding:18px}.start-actions .btn{flex:1 1 100%}}
+
+/* gate step indicator */
+#gate .gsteps{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;counter-reset:g}
+#gate .gsteps li{counter-increment:g;font:500 12px/1.3 var(--f-body);color:#7F959A;border-top:3px solid rgba(255,255,255,.14);padding-top:8px}
+#gate .gsteps li::before{content:counter(g) ". "}
+#gate .gsteps li.done{color:#A9BBBF;border-top-color:#2FCB93}
+#gate .gsteps li.cur{color:#EAF1F0;border-top-color:#8FA8FF;font-weight:700}
+#gate .gsteps[hidden]{display:none}
+
+/* motion that answers a user action */
+@media (prefers-reduced-motion:no-preference){
+  #gate section:not([hidden]){animation:tl-in .28s ease-out both}
+  #learn:not([hidden]),#demo:not([hidden]),#gloss:not([hidden]){animation:tl-in .26s ease-out both}
+  @keyframes tl-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+
+/* ===== inner app: lesson list, reader, exercises, demo, glossary ===== */
+.grid{gap:20px}
+@media (min-width:880px){
+  .grid{grid-template-columns:minmax(0,330px) minmax(0,1fr)}
+  #lesson{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+}
+@media (max-width:879px){#lesson{max-height:62vh;overflow-y:auto;overscroll-behavior:contain}}
+#lesson{padding:18px 14px}
+#lesson>h2{font:800 17px/1.25 var(--f-display);letter-spacing:-.015em;padding:0 4px}
+#lesson .blurb{font-size:13.5px;line-height:1.5;margin:4px 4px 14px}
+.grpbox{border:0;background:transparent;margin:0 0 4px;border-radius:0;overflow:visible}
+.grph{padding:10px 6px;border-radius:0;background:transparent;font:700 13px var(--f-body);border-bottom:1px solid var(--line);gap:8px}
+.grph .car{width:14px;color:var(--muted)}
+.grph .gt{flex:1;text-align:left}
+.grph .gp{font:500 12px var(--f-mono);color:var(--muted)}
+.grph[aria-expanded="true"]{border-bottom-color:var(--ink)}
+.grpbody{padding-top:6px}
+.les{border:0;background:transparent;border-radius:6px;margin:2px 0;transition:background .15s}
+.les .lh{padding:8px 8px;border-radius:6px;align-items:start;gap:10px;grid-template-columns:26px minmax(0,1fr) auto}
+.les .lh:hover{background:var(--bg)}
+.lh .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--bg);font:500 11px var(--f-mono);color:var(--muted)}
+.lh .t{font-weight:600;font-size:14px;line-height:1.4}
+.lh .pg{font:500 11.5px var(--f-mono);color:var(--muted);padding-top:3px}
+.les.cur{background:var(--bg);box-shadow:inset 3px 0 0 var(--accent)}
+.les.cur .lh:hover{background:transparent}
+.les.cur .lh .n{background:var(--ink);color:var(--bg)}
+.lsub{padding:4px 8px 10px 40px;gap:4px}
+.chip{border:0;background:transparent;border-radius:6px;padding:7px 10px;font-size:13.5px;line-height:1.4;gap:8px;transition:background .15s}
+.chip:hover{background:var(--surface)}
+.chip.cur{background:var(--ink);color:var(--bg);box-shadow:none}
+.chip.cur .n,.chip.cur .s{color:inherit;opacity:.8}
+.chip.pass .n,.chip.pass .s{color:var(--up)}
+.chip .dif,em.dif{font:600 11px var(--f-body);font-style:normal;padding:1px 7px;border-radius:99px;border:1px solid currentColor;color:var(--muted);white-space:nowrap}
+em.dif.d1{color:var(--up)}em.dif.d2{color:var(--warn)}em.dif.d3{color:var(--down)}
+.chip.cur em.dif{color:inherit;opacity:.85}
+
+/* work area */
+#work{padding:26px 30px 32px}
+@media (max-width:600px){#work{padding:18px 16px 24px}}
+#work{scroll-margin-top:12px}
+#work>div>h2,#reader>h2,#extitle{font:800 clamp(22px,3.4vw,28px)/1.2 var(--f-display);letter-spacing:-.025em;margin:2px 0 12px}
+.exhead{font:500 13px var(--f-body);color:var(--muted)}
+p.warn{background:rgba(158,98,0,.1);border-left:3px solid var(--warn);padding:10px 14px;border-radius:6px;color:var(--ink);margin:0 0 14px;font-size:14.5px}
+:root:root:root[data-theme="dark"] p.warn{background:rgba(227,166,59,.12)}
+#reader ul:not(.mk) li::marker,#reader ol li::marker{color:var(--accent)}
+#reader ul.mk{list-style:none;padding:0;gap:8px}
+#reader ul.mk li{position:relative;padding:11px 14px 11px 44px;background:var(--tint-down);border-radius:6px;margin:0;font-size:16px}
+#reader ul.mk li::before{content:"!";position:absolute;left:14px;top:11px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--down);color:#fff;font:800 12px/1 var(--f-body)}
+#reader dl.terms{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.gz-nav{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.gz-nav .btn{min-height:46px}
+
+/* exercises */
+#prompt{font-size:17px;line-height:1.6;color:var(--ink);max-width:68ch;margin:4px 0 16px}
+#chart{background:var(--surface)}
+#ctrls{counter-reset:o}
+.opt{counter-increment:o;display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start;padding:14px;line-height:1.5;margin-top:10px;transition:border-color .15s,background .15s}
+.opt::before{content:counter(o,upper-latin);width:26px;height:26px;border-radius:6px;display:grid;place-items:center;background:var(--bg);font:700 13px var(--f-mono);color:var(--muted)}
+.opt.ok::before{content:"✓";background:var(--up);color:#fff}
+.opt.bad::before{content:"✕";background:var(--down);color:#fff}
+input.num{font:500 18px var(--f-mono);border-radius:6px}
+input.num:focus,.fld input:focus,#gq:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+#fb:not(:empty){margin-top:20px;padding:18px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+#fb:has(.verdict.pass){background:var(--tint-up);border-color:var(--up);border-left-width:4px}
+#fb:has(.verdict.fail){background:var(--tint-down);border-color:var(--down);border-left-width:4px}
+.score{font:500 40px/1 var(--f-mono)}
+.fbl{gap:12px}
+.fbl li{grid-template-columns:88px minmax(0,1fr);align-items:start}
+.actions{margin-top:18px}
+.actions .btn{min-height:46px}
+
+/* demo */
+.dgrid{gap:20px}
+.dstats{gap:10px}
+.cell{background:var(--bg);border:0;border-radius:6px;padding:10px 12px}
+.cell span{color:var(--muted)}
+.cell b{font:500 17px var(--f-mono)}
+.prev{background:var(--bg);border:0;border-radius:6px;padding:12px 14px;line-height:1.9}
+.bs{gap:10px}
+.bs button{min-height:58px;font-size:16px;letter-spacing:-.01em;transition:filter .15s}
+.bs button:hover{filter:brightness(1.07)}
+.presets button,.nudge button{border-radius:6px}
+.tw{border:1px solid var(--line);border-radius:6px}
+table.t th{background:var(--bg);padding:9px 8px}
+table.t td{padding:9px 8px}
+
+/* glossary */
+#gloss dl.terms{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+#gloss .terms>div{background:var(--surface);transition:border-color .15s;padding:12px 14px}
+#gloss .terms>div:hover{border-color:var(--ink)}
+#gloss .terms dt{font-size:15px}
+#gq{min-height:46px;width:min(440px,100%);font-size:16px;padding:10px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+
+/* compact header once learning starts */
+body.working .start{display:none}
+body.working header{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px 24px;padding:16px 22px}
+body.working header h1{font-size:clamp(18px,2.6vw,22px);max-width:none}
+body.working header .sub{display:none}
+body.working header .stats{padding-top:0;border-top:0}
+body.working header .stat{padding:0 16px}
+body.working header .stat b{font-size:22px}
+body.working header .stat span{font-size:11.5px;max-width:12ch;margin-top:3px}
+body.working header::after{inset:0 400px 0 36%;opacity:.7}
+@media (max-width:760px){body.working header{grid-template-columns:1fr}body.working header::after{inset:0;opacity:.18}}
+
+/* learning goals block */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+#reader h3.sh{scroll-margin-top:16px}
+.gz-key{margin:22px 0 10px;padding:0;border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden;display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr)}
+.gz-k-head{background:var(--panel);color:var(--panel-ink);padding:20px;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+.gz-key .gz-k-head b{font:800 19px/1.25 var(--f-display);letter-spacing:-.02em;display:block;margin:0}
+.gz-k-head span{font:500 13px var(--f-mono);color:var(--panel-muted)}
+.gz-key ol{list-style:none;margin:0;padding:6px 22px;counter-reset:k}
+.gz-key li{counter-increment:k;border-bottom:1px solid var(--line);max-width:none;margin:0}
+.gz-key li:last-child{border-bottom:0}
+.gz-key li a{display:grid;grid-template-columns:30px minmax(0,1fr);align-items:baseline;padding:12px 0;color:var(--ink);text-decoration:none;font-weight:600;font-size:15.5px;line-height:1.4}
+.gz-key li a::before{content:counter(k);font:500 13px var(--f-mono);color:var(--accent)}
+.gz-key li a:hover span{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--accent)}
+.gz-key li a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.gz-key .gz-k-tip{grid-column:1/-1;margin:0;padding:11px 22px;border-top:1px solid var(--line);background:var(--bg);color:var(--muted);font-size:13.5px;max-width:none}
+@media (max-width:700px){.gz-key{grid-template-columns:1fr}.gz-k-head{padding:16px 18px;flex-direction:row;align-items:baseline}.gz-key ol{padding:4px 18px}.gz-key .gz-k-tip{padding:10px 18px}}
+#reader .gz-key .gz-k-tip{max-width:none;font-size:13.5px;line-height:1.5;margin:0}
+.gz-k-head span{white-space:nowrap}
+
+/* phone layout */
+select{min-height:42px;padding:0 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit}
+.ls-toggle{display:none}
+@media (max-width:879px){
+  .ls-toggle{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:10px 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+  .ls-toggle .lt{display:flex;flex-direction:column;min-width:0;flex:1}
+  .ls-toggle small{font:500 12px var(--f-body);color:var(--muted)}
+  .ls-toggle b{font:700 15px/1.3 var(--f-display);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ls-toggle .car{font-size:14px;color:var(--muted);transition:transform .2s}
+  .ls-toggle[aria-expanded="true"] .car{transform:rotate(180deg)}
+  #lesson:not(.open){display:none}
+  #lesson.open{max-height:70vh}
+  .grid{gap:12px}
+}
+@media (max-width:760px){
+  .tabs{gap:0}
+  .tab{flex:1 1 0;min-height:52px;padding:8px 6px;font-size:13.5px;line-height:1.25;text-align:center;border-radius:6px 6px 0 0}
+  header h1{max-width:none}
+  body.working header{padding:14px 16px;gap:12px}
+  body.working header::after{display:none}
+  body.working header .stat{padding:0 12px}
+  body.working header .stat b{font-size:20px}
+  .btn{min-height:44px}
+  .card{padding:16px}
+  body{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+  .dgrid{gap:12px}
+  .row,.dbar{gap:8px}
+}
+
+/* view switch (phone shows the computer layout by default) */
+.view-toggle{position:absolute;top:12px;right:14px;z-index:3;min-height:30px;padding:4px 12px;border:1px solid rgba(255,255,255,.28);border-radius:6px;background:rgba(255,255,255,.08);color:var(--panel-ink);font:600 12px var(--f-body);cursor:pointer}
+.view-toggle:hover{background:rgba(255,255,255,.16)}
+.view-toggle[hidden]{display:none}
 </style>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+/* start block */
+try{const r=$('#startRules');if(r&&typeof UNIT!=='undefined')r.innerHTML='<li>1 lot = '+UNIT+' нэгж</li><li>Leverage 1:'+LEV+'</li><li>Демо данс: $'+START.toLocaleString('en-US')+' виртуал мөнгө</li>';}catch(e){}
+const go=$('#ctaStart');
+if(go)go.addEventListener('click',()=>{
+  const tl=$('#tabLearn');if(tl&&!tl.classList.contains('on'))tl.click();
+  const t=$('#lesson .les.cur .lh[data-les]')||$('#lesson .lh[data-les]');if(t)t.click();
+  const w=$('#work');if(w)w.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});
+});
+const gl=$('#ctaGloss');if(gl)gl.addEventListener('click',()=>{const t=$('#tabGloss');if(t)t.click();const g=$('#gloss');if(g)g.scrollIntoView({block:'start'});});
+const done=$('#stDone');
+function label(){if(!go||!done)return;const m=/^(\d+)/.exec(done.textContent||'');go.textContent=(m&&+m[1]>0)?'Үргэлжлүүлэх':'Эхний хичээлээс эхлэх';}
+if(done){label();new MutationObserver(label).observe(done,{childList:true,characterData:true,subtree:true});}
+/* gate steps */
+const st=$('#gSteps');
+if(st){
+  const map=[['gAuth',0],['gPay',1],['gWait',2],['gRej',2]];
+  function sync(){
+    let i=-1;map.forEach(([id,n])=>{const e=document.getElementById(id);if(e&&!e.hidden)i=n;});
+    st.hidden=i<0;
+    [...st.children].forEach((li,k)=>{li.classList.toggle('cur',k===i);li.classList.toggle('done',k<i);if(k===i)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current');});
+  }
+  map.forEach(([id])=>{const e=document.getElementById(id);if(e)new MutationObserver(sync).observe(e,{attributes:true,attributeFilter:['hidden']});});
+  sync();
+}
+})();
+</script>
+<script>
+(function(){
+document.addEventListener('click',function(e){
+  if(e.target.closest&&e.target.closest('#lesson,#work,#levels,#ctaStart')&&!document.body.classList.contains('working')){document.body.classList.add('working');const go=e.target.closest('#lesson,#levels,#ctaStart');if(go)setTimeout(function(){const w=document.querySelector('#work');if(w)w.scrollIntoView({block:'start'});},160);}
+});
+})();
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const grid=$('main.grid'),les=$('#lesson');
+if(!grid||!les)return;
+const b=document.createElement('button');b.type='button';b.className='ls-toggle';b.id='lsToggle';b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','lesson');
+b.innerHTML='<span class="lt"><small>Хичээлийн жагсаалт</small><b id="lsCur">Хичээл сонгох</b></span><span class="car" aria-hidden="true">▾</span>';
+grid.insertBefore(b,les);
+function cur(){const t=les.querySelector('.les.cur .t');const e=$('#lsCur');if(t&&e)e.textContent=t.textContent;}
+cur();new MutationObserver(cur).observe(les,{childList:true,subtree:true});
+function set(o){les.classList.toggle('open',o);b.setAttribute('aria-expanded',String(o));}
+b.addEventListener('click',()=>set(!les.classList.contains('open')));
+les.addEventListener('click',e=>{if(e.target.closest('.lh[data-les],.chip'))setTimeout(()=>set(false),0);});
+})();
+</script>
+<script>
+(function(){
+var KEY='tl-view',meta=document.querySelector('meta[name=viewport]'),btn=document.getElementById('viewToggle');
+var small=Math.min(screen.width,screen.height)<700||screen.width<880;
+if(!meta||!small)return;
+function get(){try{return localStorage.getItem(KEY)||'desktop';}catch(e){return 'desktop';}}
+function set(v){try{localStorage.setItem(KEY,v);}catch(e){}}
+function apply(){
+  var v=get(),gated=document.body.classList.contains('gated');
+  meta.setAttribute('content',(v==='desktop'&&!gated)?'width=1120,viewport-fit=cover':'width=device-width,initial-scale=1,viewport-fit=cover');
+  if(btn){btn.hidden=false;btn.textContent=v==='desktop'?'Утасны харагдац':'Компьютерийн харагдац';}
+}
+if(btn)btn.addEventListener('click',function(){set(get()==='desktop'?'phone':'desktop');apply();});
+new MutationObserver(apply).observe(document.body,{attributes:true,attributeFilter:['class']});
+apply();
+})();
+</script>
 </body></html>
