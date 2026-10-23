@@ -3893,6 +3893,17 @@ header .stat b{font:700 28px/1.1 var(--f-display)!important;letter-spacing:-.03e
 #gate .gfree{margin:0 0 16px;padding:12px 14px;border-radius:14px;background:rgba(52,199,155,.14);color:#CFF5E6;font-size:14px;line-height:1.5}
 body:not(.tl-full) #lesson .lh[data-les]:not([data-les="0"]):not([data-les="1"]) .t::after,body:not(.tl-full) #lesson .lh[data-exam] .t::after{content:" 🔒";font-size:12px;opacity:.8}
 body:not(.tl-full) #lesson .lh[data-les="0"] .t::after,body:not(.tl-full) #lesson .lh[data-les="1"] .t::after{content:"ҮНЭГҮЙ";margin-left:8px;padding:2px 8px;border-radius:999px;background:var(--tint-up);color:var(--up);font:700 10px var(--f-body);letter-spacing:.04em;vertical-align:middle}
+#gate .bank{padding:4px 16px!important;display:block}
+#gate .bank div{display:flex!important;justify-content:space-between;align-items:baseline;gap:14px;padding:13px 0;background:transparent!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.12)!important}
+#gate .bank div:last-child{border-bottom:0!important}
+#gate .bank span{color:#A5B2C0!important;font-size:13px}
+#gate .bank b{color:#fff!important;font-size:16px;text-align:right;word-break:break-all}
+#gate #gAcc{cursor:pointer;color:#8FA8FF!important;font-family:var(--f-mono)}
+#gate .gcopy{margin:-4px 0 14px;font-size:12px;color:#A5B2C0}
+#gate .bank span{white-space:nowrap;flex:none}
+#gate .bank b{font-size:14px!important;word-break:normal!important;overflow-wrap:normal}
+#gate #gAcc{font-size:13px!important;letter-spacing:-.02em}
+#gate #gAcc{font-size:12px!important;overflow-wrap:anywhere}
 </style>
 
 
@@ -3992,5 +4003,9 @@ L.addEventListener('click',function(e){if(full())return;var a=e.target.closest('
 new MutationObserver(function(){if(full())return;var c=L.querySelector('.les.cur .lh');if(!c)return;var i=c.dataset.exam?99:+c.dataset.les;if(i>=FREE){lock();back();}}).observe(L,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 if(R)new MutationObserver(function(){if(full())return;var m=((R.querySelector('.exhead')||{}).textContent||'').match(/Хичээл\s+(\d+)\//);if(m&&+m[1]>FREE){lock();back();}}).observe(R,{childList:true,subtree:true});
 })();
+</script>
+<script>
+(function(){var a=document.getElementById('gAcc');if(!a)return;var h=document.createElement('div');h.className='gcopy';h.textContent='Дансны дугаар дээр дарж хуулна';var bank=document.querySelector('#gPay .bank');if(bank)bank.after(h);
+a.onclick=function(){var t=a.textContent;try{navigator.clipboard.writeText(t);h.textContent='✓ Хууллаа: '+t;}catch(e){var r=document.createRange();r.selectNodeContents(a);var s=getSelection();s.removeAllRanges();s.addRange(r);h.textContent='Сонгогдлоо. Хуулна уу.';}};})();
 </script>
 </body></html>
