@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body class="gated">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Арилжаа сурч, дадлага хийх платформ</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -208,7 +208,7 @@ body.gated .wrap,body.gated #tip{display:none!important}
 #gOut{position:fixed;right:12px;bottom:12px;z-index:50;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);font:500 12px var(--f-mono);cursor:pointer}
 #gOut[hidden]{display:none!important}
 </style>
-<div id="gate">
+<div id="gate" hidden>
  <div class="gbox">
   <ol class="gsteps" id="gSteps" aria-label="Алхам"><li data-s="auth">Нэвтрэх</li><li data-s="pay">Төлбөр</li><li data-s="wait">Баталгаажуулалт</li></ol>
   <section id="gLoad"><h2>Арилжаа сурч, дадлага хийх платформ</h2><p>Түр хүлээнэ үү. Агуулгыг ачаалж байна…</p></section>
@@ -3339,11 +3339,15 @@ import {getFirestore,doc,setDoc,onSnapshot,serverTimestamp} from "https://www.gs
 
 const $=s=>document.querySelector(s);
 const panes=['gLoad','gAuth','gPay','gWait','gRej'];
-function show(id){panes.forEach(p=>$('#'+p).hidden=(p!==id));$('#gate').hidden=false;$('#gOut').hidden=true;document.body.classList.add('gated');}
-function unlock(){
-  $('#gate').hidden=true;$('#gOut').hidden=false;document.body.classList.remove('gated');
-  requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));
+let full=false,wanted=false,curPane='gLoad';
+function render(){
+  document.body.classList.toggle('tl-full',full);
+  if(full||!wanted){$('#gate').hidden=true;document.body.classList.remove('gated');$('#gOut').hidden=!full;return;}
+  panes.forEach(p=>$('#'+p).hidden=(p!==curPane));$('#gate').hidden=false;$('#gOut').hidden=true;document.body.classList.add('gated');
 }
+function show(id){curPane=id;render();}
+function unlock(){full=true;wanted=false;render();requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));}
+window.tlGate={isFull:()=>full,open:()=>{wanted=true;render();},close:()=>{wanted=false;render();}};
 $('#gBank').textContent=PAY.bank;$('#gAcc').textContent=PAY.account;$('#gHolder').textContent=PAY.holder;$('#gAmt').textContent=PAY.amount;
 
 if(FIREBASE_CONFIG.apiKey.startsWith('YOUR_')){
@@ -3391,13 +3395,13 @@ if(FIREBASE_CONFIG.apiKey.startsWith('YOUR_')){
 
   onAuthStateChanged(auth,user=>{
     if(unsub){unsub();unsub=null;}
-    if(!user){show('gAuth');return;}
+    if(!user){full=false;show('gAuth');return;}
     show('gLoad');
     $('#gWho1').textContent=$('#gWho2').textContent=user.email;
     $('#gMemo').textContent=user.email;
     unsub=onSnapshot(doc(db,'payments',user.uid),snap=>{
-      if(!snap.exists()){show('gPay');return;}
-      const st=snap.data().status;
+      if(!snap.exists()){full=false;show('gPay');return;}
+      const st=snap.data().status;if(st!=='approved')full=false;
       if(st==='approved')unlock();
       else if(st==='rejected')show('gRej');
       else show('gWait');
@@ -3883,6 +3887,14 @@ header .stat b{font:700 28px/1.1 var(--f-display)!important;letter-spacing:-.03e
 .eyebrow{margin-bottom:12px}
 @media (max-width:760px){header .stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))}header .stat,header .stat:first-child{padding:0 8px 0 0!important;margin-right:8px!important}header .stat:last-child{margin-right:0!important}header .stat span{font-size:11px!important}}
 </style>
+<style id="freemium">
+#gate .gclose{display:inline-flex;align-items:center;margin:0 0 12px;padding:8px 14px;border:0;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font:600 13px var(--f-body);cursor:pointer}
+#gate .gclose:hover{background:rgba(255,255,255,.18)}
+#gate .gfree{margin:0 0 16px;padding:12px 14px;border-radius:14px;background:rgba(52,199,155,.14);color:#CFF5E6;font-size:14px;line-height:1.5}
+body:not(.tl-full) #lesson .lh[data-les]:not([data-les="0"]):not([data-les="1"]) .t::after,body:not(.tl-full) #lesson .lh[data-exam] .t::after{content:" 🔒";font-size:12px;opacity:.8}
+body:not(.tl-full) #lesson .lh[data-les="0"] .t::after,body:not(.tl-full) #lesson .lh[data-les="1"] .t::after{content:"ҮНЭГҮЙ";margin-left:8px;padding:2px 8px;border-radius:999px;background:var(--tint-up);color:var(--up);font:700 10px var(--f-body);letter-spacing:.04em;vertical-align:middle}
+</style>
+
 
 
 <script>
@@ -3964,6 +3976,21 @@ var h=w.querySelector('header'),t=w.querySelector('.tabs');
 if(h&&!h.querySelector('.eyebrow')){var e=document.createElement('span');e.className='eyebrow';e.textContent='Интерактив арилжааны сургалт';var d=h.querySelector('h1');if(d)d.parentNode.insertBefore(e,d);}
 if(t&&!t.querySelector('.brand')){var b=document.createElement('span');b.className='brand';b.innerHTML='<i>\u25B2</i><span>Tradelab</span>';t.prepend(b);}
 var f=document.createElement('footer');f.className='foot';f.innerHTML='<span><b>Tradelab</b> · Арилжааны сургалт, дадлагын платформ</span><span>Сургалтын зорилготой. Санхүүгийн зөвлөгөө биш.</span>';w.appendChild(f);
+})();
+</script>
+<script>
+(function(){
+var FREE=2,L=document.querySelector('#lesson'),R=document.querySelector('#reader');if(!L)return;
+function full(){return !!(window.tlGate&&window.tlGate.isFull());}
+function lock(){if(window.tlGate)window.tlGate.open();}
+function back(){var f=L.querySelector('.lh[data-les="0"]');if(f)f.click();}
+var b=document.querySelector('#gate .gbox');
+if(b&&!b.querySelector('.gclose')){var d=document.createElement('div');d.innerHTML='<button type="button" class="gclose" id="gClose">\u2190 Үнэгүй хичээл рүү буцах</button><div class="gfree">🎁 <b>Эхний 2 хичээл үнэгүй.</b> Цааш үргэлжлүүлэхийн тулд бүртгүүлж, төлбөрөө төлнө үү.</div>';while(d.lastChild)b.prepend(d.lastChild);
+document.getElementById('gClose').onclick=function(){if(window.tlGate)window.tlGate.close();};}
+L.addEventListener('click',function(e){if(full())return;var a=e.target.closest('.lh[data-les]'),x=e.target.closest('.lh[data-exam]');
+ if((a&&+a.dataset.les>=FREE)||x){e.preventDefault();e.stopImmediatePropagation();lock();}},true);
+new MutationObserver(function(){if(full())return;var c=L.querySelector('.les.cur .lh');if(!c)return;var i=c.dataset.exam?99:+c.dataset.les;if(i>=FREE){lock();back();}}).observe(L,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+if(R)new MutationObserver(function(){if(full())return;var m=((R.querySelector('.exhead')||{}).textContent||'').match(/Хичээл\s+(\d+)\//);if(m&&+m[1]>FREE){lock();back();}}).observe(R,{childList:true,subtree:true});
 })();
 </script>
 </body></html>
