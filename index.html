@@ -3904,6 +3904,10 @@ body:not(.tl-full) #lesson .lh[data-les="0"] .t::after,body:not(.tl-full) #lesso
 #gate .bank b{font-size:14px!important;word-break:normal!important;overflow-wrap:normal}
 #gate #gAcc{font-size:13px!important;letter-spacing:-.02em}
 #gate #gAcc{font-size:12px!important;overflow-wrap:anywhere}
+#gate .glink[data-out]{display:block;width:100%;margin-top:14px;padding:13px 16px;border:1px solid rgba(255,255,255,.22)!important;border-radius:14px;background:rgba(255,255,255,.07)!important;color:#fff!important;font:600 14px var(--f-body);text-decoration:none!important;text-align:center;cursor:pointer}
+#gate .glink[data-out]:hover{background:rgba(255,255,255,.14)!important}
+#gate .gwhoami{margin:0 0 12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.06);color:#C9D3DE;font-size:13px}
+#gate .gwhoami b{color:#fff}
 </style>
 
 
@@ -4007,5 +4011,11 @@ if(R)new MutationObserver(function(){if(full())return;var m=((R.querySelector('.
 <script>
 (function(){var a=document.getElementById('gAcc');if(!a)return;var h=document.createElement('div');h.className='gcopy';h.textContent='Дансны дугаар дээр дарж хуулна';var bank=document.querySelector('#gPay .bank');if(bank)bank.after(h);
 a.onclick=function(){var t=a.textContent;try{navigator.clipboard.writeText(t);h.textContent='✓ Хууллаа: '+t;}catch(e){var r=document.createRange();r.selectNodeContents(a);var s=getSelection();s.removeAllRanges();s.addRange(r);h.textContent='Сонгогдлоо. Хуулна уу.';}};})();
+</script>
+<script>
+(function(){
+document.querySelectorAll('#gate .glink[data-out]').forEach(function(b){b.textContent='Өөр бүртгэлээр нэвтрэх / Гарах';});
+var w=document.querySelector('#gWait p');if(w)w.textContent='Таны төлбөрийг админ шалгаж байна. Баталгаажмагц эрх автоматаар нээгдэнэ. Хэрэв өөр бүртгэлээр орох бол доорх товчийг дарна уу.';
+})();
 </script>
 </body></html>
