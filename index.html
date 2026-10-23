@@ -3982,7 +3982,7 @@ var f=document.createElement('footer');f.className='foot';f.innerHTML='<span><b>
 (function(){
 var FREE=2,L=document.querySelector('#lesson'),R=document.querySelector('#reader');if(!L)return;
 function full(){return !!(window.tlGate&&window.tlGate.isFull());}
-function lock(){if(window.tlGate)window.tlGate.open();}
+function lock(){if(!window.tlGate)return;window.tlGate.open();var t=document.getElementById('gAuthTitle'),a=document.getElementById('gAuth'),g=document.getElementById('gToggle');if(t&&a&&g&&!a.hidden&&t.textContent.trim()==='Нэвтрэх')g.click();var x=document.getElementById('gate');if(x)x.scrollTop=0;}
 function back(){var f=L.querySelector('.lh[data-les="0"]');if(f)f.click();}
 var b=document.querySelector('#gate .gbox');
 if(b&&!b.querySelector('.gclose')){var d=document.createElement('div');d.innerHTML='<button type="button" class="gclose" id="gClose">\u2190 Үнэгүй хичээл рүү буцах</button><div class="gfree">🎁 <b>Эхний 2 хичээл үнэгүй.</b> Цааш үргэлжлүүлэхийн тулд бүртгүүлж, төлбөрөө төлнө үү.</div>';while(d.lastChild)b.prepend(d.lastChild);
