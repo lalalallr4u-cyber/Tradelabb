@@ -256,6 +256,167 @@ body.gated .wrap,body.gated #tip{display:none!important}
  </div>
 </div>
 <button id="gOut" hidden>Гарах</button>
+<style>
+#qz{max-width:600px;margin:0 auto;padding:8px 0 40px;color:var(--ink);font:16px/1.55 var(--f-body)}
+#qz h1{font:800 clamp(24px,6.5vw,34px)/1.15 var(--f-display);margin:6px 0 12px;text-wrap:balance}
+#qz p{margin:0 0 12px;color:var(--muted)}
+#qz .qc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:14px}
+#qz .qb{display:block;width:100%;min-height:48px;padding:12px 18px;border:0;border-radius:10px;background:var(--accent);color:var(--accent-ink);font:700 16px var(--f-body);cursor:pointer;text-align:center;margin-top:12px}
+#qz .qo{display:block;width:100%;text-align:left;margin-top:10px;padding:14px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;cursor:pointer;min-height:48px}
+#qz .qo:hover{border-color:var(--accent)}
+#qz .pg{height:6px;background:var(--line);border-radius:3px;overflow:hidden}#qz .pg i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+#qz .ct{font-size:13px;color:var(--muted);margin:6px 0 14px}
+#qz #qq{font-size:20px;font-weight:600;line-height:1.3;color:var(--ink);margin:0 0 6px}
+#qz .pct{font-size:64px;font-weight:800;line-height:1;color:var(--down)}
+#qz .mt{height:14px;border-radius:7px;background:linear-gradient(90deg,var(--up),#E3B341,var(--down));position:relative;margin:14px 0 4px}
+#qz .mt i{position:absolute;top:-5px;width:4px;height:24px;border-radius:2px;background:var(--ink);transform:translateX(-2px)}
+#qz .lb{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+#qz h2{font:700 21px/1.25 var(--f-display);margin:16px 0 6px;color:var(--ink)}
+#qz .wk{border-top:1px solid var(--line);padding:12px 0;display:flex;justify-content:space-between;gap:10px}
+#qz .bd{font-size:12px;font-weight:700;color:var(--down);white-space:nowrap}
+#qz .pay{border:2px solid var(--accent);border-radius:12px;padding:16px;margin-top:16px}
+#qz .pay ul{margin:8px 0 0;padding-left:20px;color:var(--ink)}
+#qz .pay b.pr{font-size:26px}
+#qz .ki{border-top:1px solid var(--line);padding:14px 0}
+#qz .ki h3{font:600 15px/1.4 var(--f-body);margin:0 0 6px;color:var(--ink);text-transform:none;letter-spacing:0}
+#qz .ki .y{font-size:14px}.ki .ok{color:var(--up)}.ki .no{color:var(--down)}
+#qz .lk .ex{filter:blur(5px);user-select:none}
+#qz .sm{font-size:12px;color:var(--muted)}
+#qzKey{position:fixed;left:12px;bottom:12px;z-index:50;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:500 12px var(--f-mono);cursor:pointer}
+body:not(.tl-full) .wrap,body.qzopen .wrap,body.gated #qz,body:not(.tl-full) #qzKey{display:none!important}
+</style>
+<div id="qz">
+ <section id="qi"><h1>Арилжааны зах зээл дээр та ямар төрлийн тоглогч вэ?</h1>
+  <p>Мөнгөө алдах магадлалаа шалга. 20 богино асуулт, 3 минут. Туршлагагүй байсан ч болно.</p><button class="qb" id="qgo">Тест эхлэх</button></section>
+ <section id="qs" hidden class="qc"><div class="pg"><i id="qbar"></i></div><div class="ct" id="qct"></div><p id="qq"></p><div id="qop"></div></section>
+ <section id="qr" hidden>
+  <div class="qc" id="qsum"><div class="ct">Таны мөнгө алдах магадлал</div><div class="pct" id="qpct"></div>
+   <div class="mt"><i id="qmk"></i></div><div class="lb"><span>Бага</span><span>Өндөр</span></div>
+   <h2 id="qty"></h2><p id="qde"></p>
+   <div class="wk"><span><b id="qwk"></b><br><span id="qwd" style="font-size:14px;color:var(--muted)"></span></span><span class="bd">Хамгийн сул тал</span></div><div id="qcs"></div></div>
+  <div class="qc" id="qpay"><div class="pay"><b>Бүрэн хариултыг нээх</b>
+   <ul><li>20 асуулт бүрийн зөв хариулт, яагаад гэдгийн тайлбар</li><li>Таны алдаа бүрийн засвар</li><li>Бүх сургалт, дадлагын даалгавар</li></ul>
+   <p style="margin:10px 0 0"><b class="pr" style="color:var(--ink)">20,000₮</b> <span class="sm">нэг удаагийн төлбөр</span></p>
+   <button class="qb" id="qcta">Бүртгүүлж, 20,000₮ төлөөд нээх</button><button class="qo" id="qlg" style="text-align:center;font-size:14px">Бүртгэлтэй бол нэвтрэх</button></div></div>
+  <div class="qc"><h2 style="margin-top:0">Тестийн хариу, тайлбар</h2><div id="qkey"></div>
+   <button class="qo" id="qag" style="text-align:center">Тестийг дахин өгөх</button>
+   <div class="sm" style="margin-top:12px">Сургалтын зорилготой тест. Санхүүгийн зөвлөгөө биш.</div></div>
+ </section>
+ <section id="qh" hidden><h1>Тестүүд</h1><p>Тест бүрийн дараа зөв хариу, тайлбар шууд гарна.</p><div id="qhl"></div></section>
+ <section id="qt" hidden class="qc"><div id="qtb"></div></section>
+</div>
+<button id="qzKey" type="button">Тестүүд ба хариу</button>
+<script>
+(function(){
+var CATS={R:"Эрсдэлийн удирдлага",E:"Сэтгэл хөдлөл",P:"Төлөвлөгөө",K:"Мэдлэг"};
+var TIPS={R:"Та нэг арилжаанд хэт их эрсдэл авч, алдагдлаа хязгаарлаж чаддаггүй байна.",E:"Таны шийдвэрийг ашиг, алдагдлын сэтгэл хөдлөл жолоодож байна.",P:"Та урьдчилсан төлөвлөгөөгүй, мэдрэмжээрээ арилжаа хийж байна.",K:"Leverage, R:R зэрэг үндсэн ойлголтууд таны хувьд тодорхой биш байна."};
+// [ангилал, асуулт, зөв(0), дунд(1), эрсдэлтэй(2), тайлбар]
+var Q=[
+["R","Дансанд чинь 1,000$ байна. Нэг арилжаанд хэдийг эрсдэлд оруулах вэ?","10-20$ (1-2%)","50-100$ (5-10%)","Итгэлтэй байвал 500$ ба түүнээс дээш","Мэргэжлийн арилжаачид нэг арилжаанд 1-2%-иас илүүг ховор эрсдэлд оруулдаг. 1%-ийн эрсдэлтэй бол дараалсан 10 алдагдалтай ч дансны 90% үлдэнэ. 50%-ийн алдагдлыг нөхөхөд 100%-ийн ашиг хэрэгтэй."],
+["R","Таны арилжаа таны таамаглалын эсрэг явж байна. Stop loss тавьсан уу?","Орохоосоо өмнө тавьсан, хөдөлгөхгүй","Тавьсан ч хүрэх гэхээр холдуулдаг","Үгүй, буцна гэж хүлээнэ","Stop loss бол урьдчилан сонгосон хамгийн их алдагдал. Хүлээх нь алдагдлыг хязгааргүй болгодог. Stop-оо холдуулах нь тэр хамгаалалтыг устгадаг."],
+["E","Жижиг алдагдал хүлээлээ. Дараа нь юу хийх вэ?","Зогсоод шалтгааныг нь бичиж авна","Дараагийн боломжийг хүлээнэ","Нөхөх гэж шууд дахин, том лотоор орно","Revenge trading буюу өшөөгөө авах арилжаа бол дансыг хамгийн их цөлдөг эхлэгчийн алдаа. Алдагдлын дараах шийдвэр шинжилгээнд бус сэтгэл хөдлөлд тулгуурладаг."],
+["P","Арилжаанд орохын өмнө юу бэлддэг вэ?","Орох, зогсоох, ашиг авах түвшнээ бичнэ","Толгойдоо бодно","Мэдрэмж төрвөл орно","Төлөвлөгөөгүй арилжаа бол таамаг. Бичсэн төлөвлөгөө сэтгэл хөдлөл ороход дүрмээ хамгаалдаг."],
+["K","Leverage 1:100 гэдэг юу вэ?","1$-аараа 100$-ын арилжаа хийдэг, ашиг алдагдал хоёул 100 дахин томорно","Мөнгө 100 дахин нэмэгддэг","Мэдэхгүй, их байх тусам сайн","Leverage бол ашгийг ч, алдагдлыг ч томруулдаг хэрэгсэл. Эхлэгчид хэт их leverage-ээр данс нь минутанд тэглэгддэг."],
+["E","Найз \"миний сигнал 100% ажилладаг\" гэв. Та?","Өөрөө шалгаж, демод туршина","Бага дүнгээр орж үзнэ","Шууд орно","Зах зээлд 100% гэж байдаггүй. Сигнал зарж буй хүн таны ашгаар бус борлуулалтаар цалинждаг. Бусдын дохиог өөрөө шалгаж, туршилгүйгээр дагаж болохгүй."],
+["R","Таны позиц алдагдалтай байна. Stop-д хүрээгүй байхад \"дундажилж\" нэмэх үү?","Үгүй, төлөвлөгөөгөө дагана","Нэг удаа нэмнэ","Тийм, ханш буцна","Алдаж буй позицэд нэмэх нь алдсан шийдвэрээ хоёр дахин нэмэгдүүлэх явдал. Үүнийг martingale эрсдэл гэдэг бөгөөд дансны эцсийн алдааны нийтлэг шалтгаан."],
+["P","Арилжаа бүрээ бүртгэж, шинжилдэг үү?","Тийм, журнал хөтөлдөг","Заримыг","Үгүй","Журналгүй арилжаачин ямар алдаагаа давтаж байгаагаа мэддэггүй. Бүртгэл бол үнэгүй, хамгийн хүчтэй заавар."],
+["E","Өдөрт хэдэн арилжаа хийдэг вэ?","Зөвхөн дүрэмд таарсан үед (0-2)","3-5","Чарт харах бүрт, уйдсан ч орно","Арилжааны давтамж ихсэх тусам шимтгэл, сэтгэл хөдлөлийн алдаа ихэсдэг. Чанартай боломж цөөн байдаг, хүлээх нь ур чадвар."],
+["K","Стратегиа бодит мөнгөөр туршихаас өмнө юу хийсэн бэ?","Демо болон өнгөрсөн өгөгдөл дээр шалгасан","Нэг-хоёр удаа үзсэн","Шууд бодит мөнгөөр","Туршаагүй стратеги бол итгэл найдвар. Өнгөрсөн өгөгдөл ба демо дээр 50+ арилжаа хийвэл бодит статистик гарна."],
+["R","Ямар мөнгөөр арилжаа хийдэг вэ?","Алдахад амьдралд нөлөөлөхгүй мөнгө","Хуримтлалын нэг хэсэг","Зээл эсвэл хэрэгцээний мөнгө","Хэрэгцээний мөнгө дээр айдас ороход шийдвэр муудна. Алдсан ч амьдралд нөлөөлөхгүй мөнгөөр л бодитоор сурна."],
+["E","Өдрийн ашигтай хэд хэдэн арилжаа хийлээ. Дараа нь?","Хэвийн хэмжээгээрээ үргэлжлүүлнэ","Итгэл арай нэмэгдэнэ","Лотоо томруулна","Дараалсан ашиг хэт итгэл төрүүлж, дараагийн томоохон алдагдлын шалтгаан болдог. Ашгийн дараа лотоо нэмэх нь хамгийн хөнөөлтэй хэв маяг."],
+["P","Өдрийн хамгийн их алдагдлын хязгаартай юу?","Тийм, хүрмэгц зогсоно","Бодож байсан","Үгүй","Өдрийн хязгаар (жишээ 2-3%) муу өдрийг гамшиг болгохоос сэргийлнэ. Алдсан өдөр сэтгэл хөдлөл хамгийн хүчтэй үед шийдвэр гаргах нь буруу."],
+["K","NFP, хүүгийн шийдвэр зэрэг том мэдээ гарах үед яадаг вэ?","Зайлсхийх эсвэл эрсдэлээ багасгана","Анхааралтай харна","Их хөдөлнө гэж том лотоор орно","Мэдээний үед ханш огцом хөдөлж, stop-ийг алгасаж, spread ихсэдэг. Энэ нь таамаглал биш, санамсаргүй байдал."],
+["R","Данс 10% буурсан. Одоо юу хийх вэ?","Арилжааны хэмжээгээ багасгана","Хэвээр нь үргэлжлүүлнэ","Нөхөхийн тулд нэмэгдүүлнэ","Дансаа хамгаалах нь эргэн сэргэх хамгийн хурдан зам. 10%-ийг нөхөхөд 11%, 50%-ийг нөхөхөд 100% хэрэгтэй."],
+["E","Чарт хөдөлж байхад та?","Төлөвлөсөн орчин, тайван","Хааяа сандарна","Байнга харж, зүрх дэрвэнэ","Байнга үнэ харах нь стресс ба импульсив арилжааг нэмэгдүүлдэг. Stop, target тавьчихаад зайлах нь ур чадвар."],
+["K","R:R (эрсдэл/ашгийн харьцаа) гэж юу вэ, ашигладаг уу?","1:2-оос дээш байхаар тооцож орно","Заримдаа тооцно","Тооцдоггүй","1:2 харьцаатай бол арилжааны 40%-д л зөв байсан ч ашигтай. Хэт өндөр win rate хайх нь эхлэгчийн төөрөгдөл."],
+["P","Ашгаа хэзээ авахаа яаж шийддэг вэ?","Орохоосоо өмнө target тавьсан","Мэдрэмжээр","Илүү хүсээд ашгаа буцаадаг","Ашгийг шунаж хүлээх нь нээлттэй ашгийг алдагдал болгодог. Хэсэгчлэн авах, trailing stop зэрэг дүрмийг урьдчилан бичнэ."],
+["E","Хэдэн хоногийн турш ашиггүй байлаа. Та?","Төлөвлөгөөгөө шалгаж, хүлээнэ","Стратегиа солино","Лотоо томруулж сэргээнэ","Стратегийг жижиг түүвэр дээр дүгнэж болохгүй. Дараалсан алдагдал хэвийн, тэднээс хэмжээгээ багасгах нь зөв."],
+["K","Арилжааны мэдлэгээ хаанаас авдаг вэ?","Системтэй сургалт, дадлага","YouTube, ном","Telegram сигнал, найзууд","Хуваалцсан зөвлөгөө хэзээ нэгэн цагт алдагддаг. Системтэй мэдлэг, дадлага л тогтвортой үр дүн өгдөг."]
+];
+var TYPES=[[12,"Сахилгатай стратегич","Та төлөвлөгөөтэй, эрсдэлээ мэддэг. Алдах магадлал бага ч нарийн засвар хэрэгтэй."],[24,"Эргэлзээтэй дадлагажигч","Та зарим зүйлийг зөв хийдэг ч дүрэмгүй үедээ алддаг. Системгүй бол ашиг тогтвортой болохгүй."],[32,"Сэтгэл хөдлөлөөр тоглогч","Таны шийдвэрийг айдас, шунал жолоодож байна. Энэ хэвээр бол данс хурдан хорогдоно."],[40,"Мөрийтэй тоглогч","Таны арилжаа мөрийтэй тоглоомтой төстэй байна. Суурь мэдлэгээ тавих хэрэгтэй."]];
+var $=function(i){return document.getElementById(i)},B=document.body,i=0,ans=[],KEY='tl-qz';
+function full(){return B.classList.contains('tl-full')}
+function load(){try{var a=JSON.parse(localStorage.getItem(KEY));if(a&&a.length===Q.length)return a}catch(e){}return null}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ans))}catch(e){}}
+function sec(n){["qi","qs","qr","qh","qt"].forEach(function(s){$(s).hidden=s!==n});scrollTo(0,0)}
+function shuf(a){for(var j=a.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1)),t=a[j];a[j]=a[k];a[k]=t}return a}
+function ask(){var q=Q[i];$("qct").textContent="Асуулт "+(i+1)+" / "+Q.length;$("qbar").style.width=(i/Q.length*100)+"%";$("qq").textContent=q[1];var o=$("qop");o.innerHTML="";
+ shuf([0,1,2]).forEach(function(s){var b=document.createElement("button");b.className="qo";b.textContent=q[2+s];b.onclick=function(){ans[i]=s;i++;if(i<Q.length)ask();else{save();res(true)}};o.appendChild(b)})}
+function key(){var f=full(),h="";Q.forEach(function(q,n){var s=ans[n],mine=s==null?"":'<div class="y '+(s===0?'ok':'no')+'">Таны хариулт: '+q[2+s]+'</div>',open=f||n===0;
+ h+='<div class="ki'+(open?'':' lk')+'"><h3>'+(n+1)+'. '+q[1]+'</h3>'+(open||true?mine:'')+'<div class="y ok">Зөв арга: '+(open?q[2]:'<span class="ex">Нээгдээгүй хариулт</span>')+'</div><div class="y ex" style="'+(open?'filter:none;user-select:auto':'')+'">'+(open?q[5]:q[5].slice(0,60)+'… Тайлбарыг нээхийн тулд төлбөр төлнө үү.')+'</div></div>'});
+ $("qkey").innerHTML=h}
+function res(has){var f=full();$("qsum").hidden=!has;$("qpay").hidden=f;
+ if(has){var t=0,cs={R:0,E:0,P:0,K:0},w="R";ans.forEach(function(s,n){t+=s;cs[Q[n][0]]+=s});Object.keys(cs).forEach(function(k){if(cs[k]>cs[w])w=k});
+  var p=Math.round(25+t/40*65),ty=TYPES.find(function(x){return t<=x[0]});$("qpct").textContent=p+"%";$("qmk").style.left=((p-25)/65*100)+"%";$("qty").textContent=ty[1];$("qde").textContent=ty[2];$("qwk").textContent=CATS[w];var mx={R:0,E:0,P:0,K:0};Q.forEach(function(q){mx[q[0]]+=2});$("qcs").innerHTML=f?Object.keys(cs).map(function(c){var v=Math.round(100-cs[c]/mx[c]*100);return '<div style="margin-top:10px"><div class="sm" style="display:flex;justify-content:space-between"><span>'+CATS[c]+'</span><b>'+v+'/100</b></div><div class="pg"><i style="width:'+v+'%"></i></div></div>'}).join(""):"";$("qwd").textContent=TIPS[w]}
+ key();sec("qr")}
+function gate(reg){if(!window.tlGate)return;window.tlGate.open();var t=$("gAuthTitle"),g=$("gToggle");if(reg&&t&&t.textContent.trim()==="Нэвтрэх"&&g)g.click();if(!reg&&t&&t.textContent.trim()!=="Нэвтрэх"&&g)g.click()}
+$("qgo").onclick=function(){i=0;ans=[];sec("qs");ask()};
+$("qag").onclick=function(){sec("qi")};
+$("qcta").onclick=function(){gate(true)};$("qlg").onclick=function(){gate(false)};
+$("qzKey").onclick=function(){var o=!B.classList.contains("qzopen");B.classList.toggle("qzopen",o);if(o){window.qzHub()}sync()};
+function sync(){var o=B.classList.contains("qzopen");$("qz").hidden=full()&&!o;$("qzKey").textContent=o?"Сургалт руу буцах":"Тестүүд ба хариу"}
+new MutationObserver(function(){if(full()){if(ans.length===Q.length&&!$("qr").hidden)res(true)}sync()}).observe(B,{attributes:true,attributeFilter:["class"]});
+window.qzRes=function(){var a=load();if(a)ans=a;res(!!a)};var a0=load();if(a0){ans=a0;res(true)}sync();
+})();
+</script>
+
+<script>
+(function(){
+// [id, нэр, тайлбар, [асуулт, ЗӨВ, буруу, буруу, тайлбар]...]
+var T=[
+{id:"t2",n:"Лот, margin, leverage тооцоо",d:"Тоо бодож, эрсдэлээ тооцож сур",q:[
+["EUR/USD 1.0850-аас 1.0900 хүртэл өсөхөд 0.1 лот buy позиц хэдэн ашиг өгөх вэ?","50$","5$","500$","50 pip өссөн. 0.1 лотын 1 pip ойролцоогоор 1$ тул 50×1=50$."],
+["Данс 1,000$, эрсдэл 1% (10$), stop 20 pip. Хэдэн лот нээх вэ?","0.05 лот","0.5 лот","0.1 лот","10$ ÷ 20 pip = 0.5$ нэг pip. 0.05 лотын 1 pip ойролцоогоор 0.5$ тул зөв хариулт 0.05. 0.1 лот бол 20$ буюу 2% эрсдэл."],
+["1:100 leverage дээр 10,000$-ын позицэд хэдэн margin хэрэгтэй вэ?","100$","1,000$","10$","Margin = позицийн дүн ÷ leverage = 10,000 ÷ 100 = 100$."],
+["Margin call авлаа гэдэг нь?","Үлдсэн хөрөнгө margin-д ойртсон тул мөнгө нэмэх, позиц хаахгүй бол албадан хаагдана","Ашиг авах цаг боллоо","Брокер таныг шагнаж байна","Margin call бол албадан хаагдахаас өмнөх анхааруулга. Хэт том лот, том leverage-ийн шууд үр дагавар."],
+["SL 30 pip, TP 60 pip бол R:R?","1:2","2:1","1:1","Эрсдэл 30, ашиг 60 тул 1:2. Ийм харьцаатай бол арилжааны 40% нь л зөв байсан ч ашигтай байж болно."],
+["Spread гэж юу вэ?","Худалдах ба авах үнийн зөрүү","Брокерийн сарын төлбөр","Өдрийн хамгийн их хэлбэлзэл","Арилжаа нээхэд л spread-ийн зардал гарна. Мэдээний үед нэмэгддэг."],
+["Дансны 50% алдвал буцаж нөхөхөд хэдэн хувийн ашиг хэрэгтэй вэ?","100%","50%","75%","1,000$-аас 500$ болсон бол 500$-ыг 1,000$ болгоход 100% өсөх хэрэгтэй. Иймд алдагдлыг жижиг байлгана."],
+["Позицийн хэмжээг тогтоохдоо юунаас эхлэх вэ?","Stop-ийн зай ба хүлээж болох алдагдлын дүнгээс","Хамгийн их leverage-ээс","Өмнөх арилжааны лотоос","Эхлээд stop хаана вэ, хэдийг алдаж болох вэ гэж шийдээд лотоо тооцно. Лотыг сүүлд нь сонгоно."]]},
+{id:"t3",n:"Арилжааны сэтгэл зүй: FOMO, шунал, айдас",d:"Өөрийн сэтгэл хөдлөлийг таньж сур",q:[
+["Ханш огцом өсөж, та орж амжсангүй. Юу хийх вэ?","Боломж өнгөрснийг хүлээн авч, дараагийн сетапыг хүлээнэ","Одоо л орж үзье","Том лотоор орж алдсанаа нөхнө","FOMO нь хамгийн муу үнээр оруулдаг. Дараагийн сетап үргэлж гарна."],
+["Ашигтай позицийг айснаасаа 5 pip-д хаагаад ханш 80 pip явлаа. Юу хийх вэ?","Target ба trailing stop-оо урьдчилан бичиж дагана","Stop-гүй барина","Дараа нь target-гүй орно","Эрт гарах нь ашгийн урттай арилжааг тасалдаг. Гарах дүрмээ орохоосоо өмнө тогтооно."],
+["Дараалсан 3 алдагдал хүлээлээ. Юу хийх вэ?","Түр зогсоож, журнал шалгана","Лотоо 2 дахин нэмнэ","Стратегиа тэр дор нь солино","3 алдагдал жижиг түүвэр, бүр хэвийн зүйл. Сэтгэл хөдлөлөөр шийдэх нь хамгийн аюултай."],
+["Таны таамаглалын эсрэг дохио гарав. Та?","Төлөвлөгөөгөө дагаж stop-оор гарна","Дохиог үл тоож хүлээнэ","Stop-оо холдуулна","Confirmation bias: сонсохыг хүссэн зүйлээ л харах хандлага. Дүрэм хамгаалдаг."],
+["Уйдсан үедээ чарт нээж арилжаа хийх хандлагатай. Юу туслах вэ?","Арилжааны цагийн хуваарьтай болж, дүрэмд таарсан үед л орно","Илүү олон арилжаа хийнэ","Лотоо багасгана гэж бодно","Overtrading шимтгэл, алдааг нэмнэ. Боломж цөөн, хүлээх нь ур чадвар."],
+["Сэтгэл хөдлөл арилжаанд хэрхэн нөлөөлж байгааг яаж мэдэх вэ?","Журналд арилжаа бүрийн өмнө, дараа сэтгэл байдлаа бичнэ","Санаж байна","Нөлөөлдөггүй","Бичихгүй бол хэв маяг харагдахгүй. Журнал бол өөрийгөө хардаг толь."],
+["Тогтвортой арилжаачин юуг хамгийн их хянадаг вэ?","Үр дүнг бус, дүрмээ дагасан эсэхээ","Өдрийн ашгаа","Бусдын ашгийг","Нэг арилжааны үр дүн санамсаргүй, харин дүрмээ дагах нь таны хяналтад байна."],
+["Нэг арилжаа ялагдсан нь юуг батлах вэ?","Юуг ч биш, нэг жижиг түүвэр","Стратеги муу","Би арилжаанд тохирохгүй","Сайн арилжаа ч алддаг. Стратегийг ядаж 50+ арилжаагаар дүгнэнэ."]]},
+{id:"t4",n:"Техник шинжилгээний үндэс",d:"Чарт уншиж сурах эхний алхам",q:[
+["Support (дэмжлэг) түвшин гэж?","Ханш өмнө нь буцаж өссөн, худалдан авагч олон байсан түвшин","Ханшийн хамгийн их үнэ","Брокерийн заасан үнэ","Ханш түвшинд ойртоход өмнөх зан төлөв давтагдах магадлалтай, баталгаа биш."],
+["Өсөх чиглэлийн trend гэж?","Дээд оргил болон доод оргил дараалан өсөх (higher highs, higher lows)","Ханш нэг өдөр өсөх","Хэд хэдэн ногоон лаа","Trend-ийг оргилуудын дарааллаар тодорхойлно. Нэг өдрийн хөдөлгөөн trend биш."],
+["200 өдрийн moving average юуг харуулдаг вэ?","Сүүлийн 200 өдрийн дундаж үнэ, урт хугацааны чиглэл","Ирээдүйн үнэ","Өдрийн хамгийн их үнэ","MA нь өнгөрсөн үнийн дундаж тул хоцордог, чиглэл тодорхойлоход тустай."],
+["Индикаторт бүрэн найдаж болох уу?","Үгүй, энэ нь өнгөрсөн үнийн тооцоолол, ирээдүйг баталгаажуулахгүй","Тийм, 100% зөв","Зөвхөн RSI-д болно","Индикатор нь хэрэгсэл. Эрсдэлийн удирдлагагүйгээр ямар ч индикатор ашиг өгөхгүй."],
+["False breakout гэж?","Түвшнийг давсан мэт харагдаад буцаж орох","Ханш огцом өсөх","Брокерийн алдаа","Эхлээд давсан хойноо лаа хаагдахыг хүлээх нь хуурамч давалтаас сэргийлнэ."],
+["Олон timeframe-ийг хэрхэн хослуулах вэ?","Том нь чиглэлийг, жижиг нь орох цэгийг өгнө","Зөвхөн 1 минут","Зөвхөн өдрийн","Том чиглэлтэй нийцсэн орох цэг найдвартай. Жижиг timeframe-ийн чимээнд хууртахгүй."],
+["Slippage гэж?","Захиалсан үнээс өөр үнээр биелэх","Брокерийн шимтгэл","Ханшийн дундаж","Мэдээний үед хөдөлгөөн огцом, stop захиалсан үнэнээс доогуур биелж болно."],
+["Bullish engulfing лаа юу гэсэн үг вэ?","Өмнөх уруудсан лааг бүрхсэн том өсөх лаа, буцах дохио болж болно","Үнэ хэзээ ч буурахгүй","Брокерийн лого","Ганц лаа дохио гүйцэд биш. Түвшин, trend-тэй хамт үнэлнэ."]]}
+];
+var $=function(i){return document.getElementById(i)},KEY='tl-qz2',cur,k,ok,miss;
+function st(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
+function put(id,v){var s=st();s[id]=v;try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+function show(n){["qi","qs","qr","qh","qt"].forEach(function(x){$(x).hidden=x!==n});scrollTo(0,0)}
+function shuf(a){for(var j=a.length-1;j>0;j--){var r=Math.floor(Math.random()*(j+1)),t=a[j];a[j]=a[r];a[r]=t}return a}
+window.qzHub=function(){var s=st(),h='<button class="qo" data-t="0"><b>1. Арилжаачны төрөл (20 асуулт)</b><br><span class="sm">Хариу, тайлбар нээгдсэн</span></button>';
+ T.forEach(function(t,n){h+='<button class="qo" data-t="'+(n+1)+'"><b>'+(n+2)+'. '+t.n+'</b> ('+t.q.length+' асуулт)<br><span class="sm">'+(s[t.id]!=null?'Сүүлийн дүн: '+s[t.id]+'%':t.d)+'</span></button>'});
+ $("qhl").innerHTML=h;show("qh")};
+$("qhl").onclick=function(e){var b=e.target.closest("[data-t]");if(!b)return;var n=+b.dataset.t;if(n===0)window.qzRes();else{cur=T[n-1];k=0;ok=0;miss=[];ask()}};
+function ask(){var q=cur.q[k],h='<div class="ct">'+cur.n+' · '+(k+1)+' / '+cur.q.length+'</div><p id="qq">'+q[0]+'</p><div id="qto"></div><div id="qtx"></div>';
+ $("qtb").innerHTML=h;show("qt");var o=$("qto");
+ shuf([1,2,3]).concat([]).concat([]);var ord=shuf([1,2,3]);
+ ord.forEach(function(x){var b=document.createElement("button");b.className="qo";b.textContent=q[x];b.onclick=function(){pick(b,x===1,q,o)};o.appendChild(b)})}
+function pick(b,right,q,o){[].forEach.call(o.children,function(c){c.disabled=true;if(c.textContent===q[1])c.style.borderColor="var(--up)"});
+ if(right)ok++;else{b.style.borderColor="var(--down)";miss.push(q)}
+ $("qtx").innerHTML='<div class="qc"><b style="color:var(--'+(right?'up':'down')+')">'+(right?'Зөв':'Буруу')+'</b><p style="margin:6px 0 0;color:var(--ink)">'+(right?'':'Зөв хариулт: '+q[1]+'. ')+q[4]+'</p></div><button class="qb" id="qnx">'+(k+1<cur.q.length?'Дараагийн асуулт':'Дүнг харах')+'</button>';
+ $("qnx").onclick=function(){k++;if(k<cur.q.length)ask();else fin()}}
+function fin(){var p=Math.round(ok/cur.q.length*100);put(cur.id,p);
+ var h='<h2>'+cur.n+'</h2><div class="pct" style="color:var(--'+(p>=70?'up':'down')+')">'+p+'%</div><p>'+ok+' / '+cur.q.length+' зөв.'+(p>=70?' Сайн байна.':' Алдсан асуултуудаа доороос шалгана уу.')+'</p>';
+ miss.forEach(function(q){h+='<div class="ki"><h3>'+q[0]+'</h3><div class="y ok">Зөв: '+q[1]+'</div><div class="y">'+q[4]+'</div></div>'});
+ $("qtb").innerHTML=h+'<button class="qb" id="qbk">Тестүүд рүү</button><button class="qo" id="qrt" style="text-align:center">Дахин өгөх</button>';
+ $("qbk").onclick=window.qzHub;$("qrt").onclick=function(){k=0;ok=0;miss=[];ask()};scrollTo(0,0)}
+})();
+</script>
+
 <div class="wrap">
   <header>
     <button class="view-toggle" id="viewToggle" type="button" hidden></button>
@@ -3995,12 +4156,12 @@ var f=document.createElement('footer');f.className='foot';f.innerHTML='<span><b>
 </script>
 <script>
 (function(){
-var FREE=2,L=document.querySelector('#lesson'),R=document.querySelector('#reader');if(!L)return;
+var FREE=0,L=document.querySelector('#lesson'),R=document.querySelector('#reader');if(!L)return;
 function full(){return !!(window.tlGate&&window.tlGate.isFull());}
 function lock(){if(!window.tlGate)return;window.tlGate.open();var t=document.getElementById('gAuthTitle'),a=document.getElementById('gAuth'),g=document.getElementById('gToggle');if(t&&a&&g&&!a.hidden&&t.textContent.trim()==='Нэвтрэх')g.click();var x=document.getElementById('gate');if(x)x.scrollTop=0;}
 function back(){var f=L.querySelector('.lh[data-les="0"]');if(f)f.click();}
 var b=document.querySelector('#gate .gbox');
-if(b&&!b.querySelector('.gclose')){var d=document.createElement('div');d.innerHTML='<button type="button" class="gclose" id="gClose">\u2190 Үнэгүй хичээл рүү буцах</button><div class="gfree">🎁 <b>Эхний 2 хичээл үнэгүй.</b> Цааш үргэлжлүүлэхийн тулд бүртгүүлж, төлбөрөө төлнө үү.</div>';while(d.lastChild)b.prepend(d.lastChild);
+if(b&&!b.querySelector('.gclose')){var d=document.createElement('div');d.innerHTML='<button type="button" class="gclose" id="gClose">\u2190 Тест рүү буцах</button><div class="gfree">🔓 <b>20,000₮ нэг удаа төлөөд</b> тестийн бүрэн хариу, тайлбар, бүх сургалтыг нээнэ.</div>';while(d.lastChild)b.prepend(d.lastChild);
 document.getElementById('gClose').onclick=function(){if(window.tlGate)window.tlGate.close();};}
 L.addEventListener('click',function(e){if(full())return;var a=e.target.closest('.lh[data-les]'),x=e.target.closest('.lh[data-exam]');
  if((a&&+a.dataset.les>=FREE)||x){e.preventDefault();e.stopImmediatePropagation();lock();}},true);
